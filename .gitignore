@@ -1,0 +1,21 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+.venv/
+.env
+
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# run artefacts
+runs/
+*.jsonl
+*.gif
+*.png
+!docs/img/*.png
+
+.DS_Store
