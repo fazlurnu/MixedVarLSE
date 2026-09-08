@@ -23,7 +23,7 @@ from mvlse import Continuous, DesignSpace, Ordinal, run_lse
 
 KT = 0.514444  # kt -> m/s
 SPEEDS = [20 * KT, 40 * KT, 60 * KT]
-N_ENCOUNTERS = 100_000
+N_ENCOUNTERS = 100_000  # default; --encounters overrides (1e4 is fine for the surrogate)
 TAU = -3.0  # log10 of the P(LoS) = 1e-3 threshold
 
 # log10 of the Jeffreys stand-in a zero-loss cell carries INSIDE the surrogate (the
@@ -43,14 +43,6 @@ def show_p(y: float, se: float) -> str:
 def airframe(speed: float) -> str:
     """The class airframe: 20 kt flies the M600, 40 and 60 kt the fixed-wing."""
     return "multirotor" if speed < 15.0 else "fixedwing"
-
-
-_mc = make_blackbox(
-    n_encounters=N_ENCOUNTERS,
-    seed=7,
-    fixed={"rpz": 150.0, "dcpa": 0.0},  # dcpa 0: worst geometry every encounter
-    n_jobs=-1,                          # episodes fan out over every core
-)
 
 
 def blackbox(points):
@@ -110,5 +102,16 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--probe", action="store_true", help="run the 6-corner bracket check only")
     ap.add_argument("--budget", type=int, default=250, help="total evaluations (default 250)")
+    ap.add_argument("--encounters", type=int, default=N_ENCOUNTERS,
+                    help=f"MC encounters per design point (default {N_ENCOUNTERS})")
     args = ap.parse_args()
+
+    N_ENCOUNTERS = args.encounters
+    ZERO_Y = np.log10(0.5 / (N_ENCOUNTERS + 1.0))
+    _mc = make_blackbox(
+        n_encounters=N_ENCOUNTERS,
+        seed=7,
+        fixed={"rpz": 150.0, "dcpa": 0.0},  # dcpa 0: worst geometry every encounter
+        n_jobs=-1,                          # episodes fan out over every core
+    )
     probe() if args.probe else campaign(args.budget)
