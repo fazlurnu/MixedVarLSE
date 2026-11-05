@@ -17,6 +17,7 @@ surrogates is not evidence.
 """
 from __future__ import annotations
 
+import time
 from collections.abc import Sequence
 from dataclasses import dataclass, field
 
@@ -93,8 +94,6 @@ def compare_methods(
     Returns a pandas DataFrame, one row per method, with F1 averaged over ``seeds`` and its
     standard deviation alongside — read them together.
     """
-    import time
-
     grid = test_grid(problem) if grid is None else grid
     truth = problem.truth(grid)
     rows: list[BenchmarkRow] = []
@@ -133,7 +132,6 @@ def compare_active(
     methods: Sequence[str] = MODEL_NAMES,
     *,
     seeds: Sequence[int] = DEFAULT_SEEDS,
-    config: LseConfig | None = None,
     grid: np.ndarray | None = None,
     verbose: bool = True,
     **overrides,
@@ -143,8 +141,6 @@ def compare_active(
     ``overrides`` are :class:`~mvlse.lse.LseConfig` fields — ``max_evaluations`` above all,
     since a comparison at unequal budget compares nothing.
     """
-    import time
-
     grid = test_grid(problem) if grid is None else grid
     truth = problem.truth(grid)
     rows: list[BenchmarkRow] = []
@@ -153,16 +149,15 @@ def compare_active(
         started = time.perf_counter()
         row = BenchmarkRow(method, problem.name, 0, 0)
         for seed in seeds:
-            settings = dict(
-                threshold=problem.threshold,
-                greater_is_inside=problem.greater_is_inside,
-                method=method,
-                seed=seed,
-                verbose=False,
-            )
-            settings.update(overrides)
-            run_config = config if config is not None else LseConfig(**settings)
-            result = run_lse(problem.space, problem, config=run_config)
+            config = LseConfig(**{
+                "threshold": problem.threshold,
+                "greater_is_inside": problem.greater_is_inside,
+                "verbose": False,
+                **overrides,
+                "method": method,  # never overridable: they are what is being compared
+                "seed": seed,
+            })
+            result = run_lse(problem.space, problem, config=config)
             mu, _ = result.predict(grid)
             row.scores.append(
                 score_level_set(mu, truth, problem.threshold,

@@ -119,6 +119,7 @@ mvlse/
   problems/        the benchmark surfaces
 docs/              FORMULA_SHEET.md, CHOOSING.md, FINDINGS.md
 examples/          custom_blackbox.ipynb — how to run it on your own function
+                   opencdarr_blackbox.ipynb, blueskycdarr_blackbox.ipynb — two simulators, one study
 tests/             148 tests
 references/        GP2.pdf, bayes-safety-val.pdf
 ```
@@ -174,6 +175,12 @@ call `run_lse` — see [examples/custom_blackbox.ipynb](examples/custom_blackbox
   with the caveats.
 - **[examples/custom_blackbox.ipynb](examples/custom_blackbox.ipynb)** — the whole API on a
   user-defined function, including noisy blackboxes, caching and parallel evaluation.
+- **[examples/opencdarr_blackbox.ipynb](examples/opencdarr_blackbox.ipynb)** — a real
+  simulator: the estimator's noise shape, the case for the log scale, MC and rare-event
+  (IPS) blackboxes over OpenCDaRR.
+- **[examples/blueskycdarr_blackbox.ipynb](examples/blueskycdarr_blackbox.ipynb)** — the
+  same study on a second engine (BlueSky dynamics via `blueskycdarr`), with a cross-engine
+  check of the boundary against a 144-condition factorial sweep.
 
 ---
 

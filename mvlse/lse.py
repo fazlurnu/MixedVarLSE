@@ -351,11 +351,7 @@ def run_lse(
         recent = [r.flip_fraction for r in result.rounds[-(config.flip_window - 1):]] + [flip]
         if record.max_straddle < 0:
             result.stop_reason = "confident (max straddle < 0)"
-        elif (
-            index >= config.flip_window
-            and len(recent) >= config.flip_window
-            and max(recent) <= config.flip_tolerance
-        ):
+        elif index >= config.flip_window and max(recent) <= config.flip_tolerance:
             result.stop_reason = (
                 f"plateau (classification moved <= {config.flip_tolerance:.1%} "
                 f"for {config.flip_window} rounds)"
@@ -363,39 +359,30 @@ def run_lse(
         elif len(result.y) >= config.max_evaluations:
             result.stop_reason = f"budget ({config.max_evaluations} evaluations)"
 
-        if result.stop_reason:
-            record.seconds = time.perf_counter() - round_started
-            result.rounds.append(record)
-            if config.verbose:
-                print(record, flush=True)
-            break
-
         # ------------------------------------------------------------ acquisition
-        k = min(config.batch_size, config.max_evaluations - len(result.y))
-        chosen = select_batch(
-            scores, candidates, space.q, k,
-            exclude=spent, min_distance=config.min_batch_distance,
-        )
-        if not chosen:
-            result.stop_reason = "candidate set exhausted"
-            record.seconds = time.perf_counter() - round_started
-            result.rounds.append(record)
-            break
-
-        spent.update(chosen)
-        record.picked = chosen
-        batch = candidates[chosen]
-        y_new, se_new = measure(batch)
-        result.w = np.vstack([result.w, batch])
-        result.y = np.append(result.y, y_new)
-        result.se = np.append(result.se, se_new)
+        if not result.stop_reason:
+            k = min(config.batch_size, config.max_evaluations - len(result.y))
+            # spent candidates already score -inf, so select_batch never returns them
+            chosen = select_batch(
+                scores, candidates, space.q, k, min_distance=config.min_batch_distance
+            )
+            if chosen:
+                spent.update(chosen)
+                record.picked = chosen
+                batch = candidates[chosen]
+                y_new, se_new = measure(batch)
+                result.w = np.vstack([result.w, batch])
+                result.y = np.append(result.y, y_new)
+                result.se = np.append(result.se, se_new)
+            else:
+                result.stop_reason = "candidate set exhausted"
 
         record.seconds = time.perf_counter() - round_started
         result.rounds.append(record)
         if config.verbose:
             print(record, flush=True)
-    else:
-        result.stop_reason = f"budget ({config.max_evaluations} evaluations)"
+        if result.stop_reason:
+            break
 
     result.seconds = time.perf_counter() - started
     if config.verbose:

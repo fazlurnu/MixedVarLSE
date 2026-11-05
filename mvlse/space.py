@@ -85,9 +85,6 @@ class Point(Mapping[str, Any]):
 class Variable:
     """Base class. Subclasses declare a variable's *nature*, which picks its encoding."""
 
-    def __post_init__(self) -> None:  # pragma: no cover - overridden where needed
-        pass
-
 
 @dataclass(frozen=True)
 class Continuous(Variable):
@@ -117,6 +114,10 @@ class Discrete(Variable):
 
     levels: tuple[Any, ...]
 
+    def __init__(self, levels: Sequence[Any]) -> None:
+        object.__setattr__(self, "levels", tuple(levels))
+        self.__post_init__()
+
     def __post_init__(self) -> None:
         if len(self.levels) < 2:
             raise ValueError(f"a discrete variable needs >= 2 levels, got {self.levels!r}")
@@ -132,7 +133,7 @@ class Discrete(Variable):
         return self.levels.index(value)
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, init=False)  # the list-taking __init__ comes from Discrete
 class Ordinal(Discrete):
     """A discrete input whose levels have a **meaningful order** — 'small/medium/big',
     a mesh refinement, a number of engines.
@@ -141,10 +142,6 @@ class Ordinal(Discrete):
     conversion (:mod:`mvlse.kernels`, Eq. 15) builds it in by construction, Gower
     (Eq. 18) is blind to it, and the hypersphere kernels (Eqs. 19-24) can *learn* it.
     """
-
-    def __init__(self, levels: Sequence[Any]) -> None:
-        object.__setattr__(self, "levels", tuple(levels))
-        self.__post_init__()
 
     def positions(self) -> np.ndarray:
         """Level positions in ``[0, 1]``, used by direct-conversion coding.
@@ -158,21 +155,15 @@ class Ordinal(Discrete):
             raw = np.asarray(self.levels, dtype=float)
         except (TypeError, ValueError):
             raw = np.arange(self.n_levels, dtype=float)
-        if raw.max() == raw.min():  # pragma: no cover - guarded by distinct levels
-            return np.zeros(self.n_levels)
         return (raw - raw.min()) / (raw.max() - raw.min())
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, init=False)
 class Nominal(Discrete):
     """A discrete input whose levels have **no order** — a material, an oxidant, a colour.
 
     Imposing an order on these is exactly the bias the paper warns about in Section 3.3.
     """
-
-    def __init__(self, levels: Sequence[Any]) -> None:
-        object.__setattr__(self, "levels", tuple(levels))
-        self.__post_init__()
 
     def positions(self) -> np.ndarray:
         """Rank positions. Meaningless by construction — direct conversion uses them

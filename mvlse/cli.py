@@ -15,7 +15,7 @@ import argparse
 import json
 from pathlib import Path
 
-from .benchmark import compare_active, compare_methods
+from .benchmark import compare_active, compare_methods, test_grid
 from .correlation import CORRELATIONS
 from .lse import LseConfig, run_lse
 from .metrics import score_level_set
@@ -87,8 +87,6 @@ def main(argv: list[str] | None = None) -> None:
             keep_snapshots=args.plots,
         )
         result = run_lse(problem.space, problem, config=config)
-
-        from .benchmark import test_grid
 
         grid = test_grid(problem)
         mu, _ = result.predict(grid)

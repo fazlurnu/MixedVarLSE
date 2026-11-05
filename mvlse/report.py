@@ -63,6 +63,23 @@ def _mesh(space: DesignSpace, n: int):
     return np.meshgrid(axis0, axis1, indexing="ij")
 
 
+def _draw_panel(ax, mesh, estimate, truth, tau: float, title: str, fontsize: int) -> None:
+    """One category's panel: the true set shaded and dashed if known, the estimate in red."""
+    if truth is not None and truth.min() <= tau <= truth.max():
+        ax.contourf(*mesh, truth, levels=[truth.min(), tau], colors=[_INSIDE], alpha=0.25)
+        ax.contour(*mesh, truth, levels=[tau], colors="k", linewidths=0.9, linestyles="--")
+    if estimate.min() <= tau <= estimate.max():
+        ax.contour(*mesh, estimate, levels=[tau], colors=[_ESTIMATE], linewidths=1.5)
+    ax.set_title(title, fontsize=fontsize)
+    ax.set_xticks([])
+    ax.set_yticks([])
+
+
+def _hide_unused(axes, m: int) -> None:
+    for ax in axes.flat[m:]:
+        ax.axis("off")
+
+
 def boundary_panels(
     result: LseResult,
     problem: Problem | None = None,
@@ -92,7 +109,7 @@ def boundary_panels(
     _require_2d(space, "boundary_panels()")
 
     grid = grid_candidates(space, n_per_axis)
-    mesh0, mesh1 = _mesh(space, n_per_axis)
+    mesh = _mesh(space, n_per_axis)
     per_panel = n_per_axis**2
     mu, _ = result.model.predict(grid)
     truth = problem.truth(grid) if problem is not None else None
@@ -106,19 +123,10 @@ def boundary_panels(
 
     for index in range(space.m):
         ax = axes[index // cols, index % cols]
-        window = slice(index * per_panel, (index + 1) * per_panel)
-
-        if truth is not None:
-            true_block = truth[window].reshape(mesh0.shape)
-            if true_block.min() <= tau <= true_block.max():
-                ax.contourf(mesh0, mesh1, true_block, levels=[true_block.min(), tau],
-                            colors=[_INSIDE], alpha=0.25)
-                ax.contour(mesh0, mesh1, true_block, levels=[tau], colors="k",
-                           linewidths=0.9, linestyles="--")
-
-        estimate = mu[window].reshape(mesh0.shape)
-        if estimate.min() <= tau <= estimate.max():
-            ax.contour(mesh0, mesh1, estimate, levels=[tau], colors=[_ESTIMATE], linewidths=1.6)
+        block = slice(index * per_panel, (index + 1) * per_panel)
+        _draw_panel(ax, mesh, mu[block].reshape(mesh[0].shape),
+                    None if truth is None else truth[block].reshape(mesh[0].shape),
+                    tau, titles[index], fontsize=7)
 
         here = categories == index
         initial = here & (np.arange(len(result.w)) < result.n_initial)
@@ -126,12 +134,7 @@ def boundary_panels(
         ax.plot(result.w[initial, 0], result.w[initial, 1], "ks", ms=3.5)
         ax.plot(result.w[acquired, 0], result.w[acquired, 1], "o", color=_ESTIMATE, ms=3.5)
 
-        ax.set_title(titles[index], fontsize=7)
-        ax.set_xticks([])
-        ax.set_yticks([])
-
-    for index in range(space.m, rows * cols):
-        axes[index // cols, index % cols].axis("off")
+    _hide_unused(axes, space.m)
 
     default = (
         f"{result.config.method} — {result.n_evaluations} evaluations; "
@@ -268,12 +271,12 @@ def animate_boundary(
             "no snapshots recorded — rerun with LseConfig(keep_snapshots=True) "
             "(or run_lse(..., keep_snapshots=True))."
         )
-    if space.q != 2 or result.monitor.size == 0:
+    if result.monitor.size == 0:
         raise ValueError("animate_boundary() needs the default 2-D monitor lattice")
 
     side = round((len(result.monitor) / space.m) ** 0.5)
     per_panel = side * side
-    mesh0, mesh1 = _mesh(space, side)
+    mesh = _mesh(space, side)
     truth = problem.truth(result.monitor) if problem is not None else None
     tau = result.config.threshold
     rows, cols = _panel_layout(space)
@@ -292,24 +295,13 @@ def animate_boundary(
                                  sharex=True, sharey=True, squeeze=False, dpi=80)
         for index in range(space.m):
             ax = axes[index // cols, index % cols]
-            window = slice(index * per_panel, (index + 1) * per_panel)
-            if truth is not None:
-                block = truth[window].reshape(mesh0.shape)
-                if block.min() <= tau <= block.max():
-                    ax.contourf(mesh0, mesh1, block, levels=[block.min(), tau],
-                                colors=[_INSIDE], alpha=0.25)
-                    ax.contour(mesh0, mesh1, block, levels=[tau], colors="k",
-                               linewidths=0.8, linestyles="--")
-            estimate = mu[window].reshape(mesh0.shape)
-            if estimate.min() <= tau <= estimate.max():
-                ax.contour(mesh0, mesh1, estimate, levels=[tau], colors=[_ESTIMATE], linewidths=1.4)
+            block = slice(index * per_panel, (index + 1) * per_panel)
+            _draw_panel(ax, mesh, mu[block].reshape(mesh[0].shape),
+                        None if truth is None else truth[block].reshape(mesh[0].shape),
+                        tau, titles[index], fontsize=6)
             shown = (categories == index) & (np.arange(len(result.w)) < n_shown)
             ax.plot(result.w[shown, 0], result.w[shown, 1], "k.", ms=3)
-            ax.set_title(titles[index], fontsize=6)
-            ax.set_xticks([])
-            ax.set_yticks([])
-        for index in range(space.m, rows * cols):
-            axes[index // cols, index % cols].axis("off")
+        _hide_unused(axes, space.m)
         fig.suptitle(
             f"round {frame_no}   |   {n_shown} evaluations   |   "
             f"max straddle {result.rounds[frame_no].max_straddle:+.3g}",

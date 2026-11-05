@@ -16,7 +16,10 @@ call the blackbox.
 """
 from __future__ import annotations
 
+import warnings
+
 import numpy as np
+from scipy.stats import qmc
 
 from .space import DesignSpace
 
@@ -100,22 +103,14 @@ def random_candidates(
 ) -> np.ndarray:
     """A scrambled Sobol' cloud of ``n_per_category`` points per category.
 
-    Scales to any ``q``, unlike :func:`grid_candidates`. Falls back to uniform sampling if
-    SciPy's QMC module is unavailable.
+    Scales to any ``q``, unlike :func:`grid_candidates`.
     """
     if n_per_category < 1:
         raise ValueError(f"n_per_category must be >= 1, got {n_per_category}")
-    try:
-        import warnings
-
-        from scipy.stats import qmc
-
-        with warnings.catch_warnings():
-            # Sobol' warns unless n is a power of two. Balance matters for integration, not
-            # for a candidate pool the acquisition is about to rank, so the advice does not
-            # apply here and the warning would only train users to ignore warnings.
-            warnings.filterwarnings("ignore", message=".*power of 2.*")
-            unit = qmc.Sobol(d=space.q, scramble=True, seed=seed).random(n_per_category)
-    except ImportError:  # pragma: no cover - scipy always ships qmc these days
-        unit = np.random.default_rng(seed).random((n_per_category, space.q))
+    with warnings.catch_warnings():
+        # Sobol' warns unless n is a power of two. Balance matters for integration, not
+        # for a candidate pool the acquisition is about to rank, so the advice does not
+        # apply here and the warning would only train users to ignore warnings.
+        warnings.filterwarnings("ignore", message=".*power of 2.*")
+        unit = qmc.Sobol(d=space.q, scramble=True, seed=seed).random(n_per_category)
     return _with_categories(_scale_to_space(unit, space), space)

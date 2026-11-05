@@ -96,31 +96,37 @@ def _log_det(chol) -> float:
     return 2.0 * float(np.log(np.diag(chol[0])).sum())
 
 
-def _negative_log_likelihood(
+def _solve(
     params: np.ndarray,
     kernel: MixedKernel,
     w: np.ndarray,
     y: np.ndarray,
     noise: np.ndarray | None,
-) -> float:
-    """Eq. (9), concentrated over ``beta`` (and over ``sigma^2`` when there is no noise)."""
-    n = len(y)
+):
+    """Factor and profile: Eq. (10) over ``beta`` (and over ``sigma^2`` when there is no
+    noise). Returns ``(chol, beta, sigma2, alpha, nll)``, or ``None`` if not PD."""
     if noise is None:
         chol = _factor(kernel(params, w, w))
-        if chol is None:
-            return _FAILED
-        beta = _profile_beta(chol, y)
-        resid = y - beta
-        sigma2 = max(float(resid @ cho_solve(chol, resid)) / n, 1e-12)
-        return 0.5 * (n * np.log(sigma2) + _log_det(chol))
-
-    sigma2 = 10.0 ** params[-1]
-    chol = _factor(sigma2 * kernel(params[:-1], w, w) + np.diag(noise))
+    else:
+        sigma2 = 10.0 ** params[-1]
+        chol = _factor(sigma2 * kernel(params[:-1], w, w) + np.diag(noise))
     if chol is None:
-        return _FAILED
+        return None
     beta = _profile_beta(chol, y)
-    resid = y - beta
-    return 0.5 * (float(resid @ cho_solve(chol, resid)) + _log_det(chol))
+    alpha = cho_solve(chol, y - beta)
+    fit_term = float((y - beta) @ alpha)
+    if noise is None:
+        sigma2 = max(fit_term / len(y), 1e-12)
+        nll = 0.5 * (len(y) * np.log(sigma2) + _log_det(chol))
+    else:
+        nll = 0.5 * (fit_term + _log_det(chol))
+    return chol, beta, sigma2, alpha, nll
+
+
+def _negative_log_likelihood(params, kernel, w, y, noise) -> float:
+    """Eq. (9), concentrated — see :func:`_solve`."""
+    solved = _solve(params, kernel, w, y, noise)
+    return _FAILED if solved is None else solved[-1]
 
 
 @dataclass(frozen=True)
@@ -252,16 +258,7 @@ def fit(
         )
 
     params = best.x
-    if noise is None:
-        chol = _factor(kernel(params, w, w))
-        beta = _profile_beta(chol, y_scaled)
-        resid = y_scaled - beta
-        sigma2 = max(float(resid @ cho_solve(chol, resid)) / len(y), 1e-12)
-    else:
-        sigma2 = 10.0 ** params[-1]
-        chol = _factor(sigma2 * kernel(params[:-1], w, w) + np.diag(noise))
-        beta = _profile_beta(chol, y_scaled)
-        resid = y_scaled - beta
+    chol, beta, sigma2, alpha, _ = _solve(params, kernel, w, y_scaled, noise)
 
     return FittedGP(
         kernel=kernel,
@@ -274,5 +271,5 @@ def fit(
         log_likelihood=-float(best.fun),
         _scaler=scaler,
         _chol=chol,
-        _alpha=cho_solve(chol, resid),
+        _alpha=alpha,
     )

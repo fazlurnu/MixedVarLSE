@@ -91,19 +91,15 @@ class Correlation:
         return self.from_distances(params, np.abs(a[:, None, :] - b[None, :, :]))
 
 
-def _fixed_p_exponential(p: float) -> _FromDistances:
-    def call(params: np.ndarray, d: np.ndarray) -> np.ndarray:
-        theta = 10.0 ** params
-        return np.exp(-((d**p) * theta).sum(axis=2))
-
-    return call
-
-
 def _free_p_exponential(params: np.ndarray, d: np.ndarray) -> np.ndarray:
     """Eq. (8) with ``p`` fitted per dimension."""
     n = d.shape[2]
     theta, p = 10.0 ** params[:n], params[n : 2 * n]
     return np.exp(-((d**p) * theta).sum(axis=2))
+
+
+def _fixed_p_exponential(p: float) -> _FromDistances:
+    return lambda params, d: _free_p_exponential(np.append(params, np.full(d.shape[2], p)), d)
 
 
 def _matern_3_2(h: np.ndarray) -> np.ndarray:

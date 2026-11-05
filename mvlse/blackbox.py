@@ -130,7 +130,6 @@ def evaluate(blackbox: Blackbox, points: Sequence[Point]) -> tuple[np.ndarray, n
             "it must return one output per point"
         )
 
-    arr = np.asarray(raw, dtype=object) if not isinstance(raw, np.ndarray) else raw
     # The clean fast paths: a plain (n,) vector of numbers, or an (n, 2) [y, se] block.
     if isinstance(raw, np.ndarray) and raw.dtype.kind in "fiu":
         if raw.ndim == 1:
@@ -147,7 +146,6 @@ def evaluate(blackbox: Blackbox, points: Sequence[Point]) -> tuple[np.ndarray, n
         pairs = [_split_one(item) for item in list(raw)]
         y = np.array([p[0] for p in pairs], dtype=float)
         se = np.array([p[1] for p in pairs], dtype=float)
-        del arr
 
     if len(y) != len(points):
         raise ValueError(
