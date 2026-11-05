@@ -19,3 +19,24 @@ runs/
 !docs/img/*.png
 
 .DS_Store
+
+# papers: LaTeX sources, build files, bibliographies, documents
+*.tex
+*.bib
+*.bst
+*.cls
+*.sty
+*.aux
+*.bbl
+*.blg
+*.spl
+*.toc
+*.out
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.pgf
+*.pdf
+*.docx
+*.pptx
+*.zip
