@@ -116,3 +116,10 @@ def test_hs_dim_beats_the_coding_kernels_on_an_anti_correlated_surface():
 def test_unknown_problem_is_rejected():
     with pytest.raises(ValueError, match="unknown problem"):
         get_problem("not_a_problem")
+
+
+def test_goldstein36_pair_has_the_heading_scan_shape() -> None:
+    """3 continuous, levels (4, 3, 3): the category count of a CNS heading scan (exp1)."""
+    for name in ("goldstein36_graded", "goldstein36_flip"):
+        space = get_problem(name).space
+        assert (space.q, space.n_levels, space.m) == (3, (4, 3, 3), 36)

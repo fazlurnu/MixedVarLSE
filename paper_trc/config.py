@@ -93,11 +93,12 @@ HEADING_RANGE = (2.0, 180.0)   # relative heading [deg]; 0 deg is degenerate (no
 EXPERIMENTS = {
     # Stage 1 verification: known-truth surfaces, the same active loop as the CNS runs.
     "exp0_verify": {
-        "problems": ["goldstein_graded", "goldstein_flip"],
+        # Same shape as exp1: 3 continuous, discrete levels (4, 3, 3) = 36 categories.
+        "problems": ["goldstein36_graded", "goldstein36_flip"],
         "methods": ["category_wise", "dc", "gower", "hs_dim"],
         "seeds": [1, 2, 3],
-        "max_evaluations": 100,     # TODO(author): pick; match the CNS budget per category?
-        "n_init_per_category": 2,
+        "max_evaluations": 250,     # = exp1
+        "n_init_per_category": 1,   # = exp1: 36 initial samples
     },
     # Where is the worst heading, and how do the regimes move with speed? All three classes.
     "exp1_heading": {

@@ -58,6 +58,8 @@ _FLIP_SCALE = (1.00, -0.75, 1.15)
 _FLIP_SHIFT = (0.00, 0.10, -0.10)
 _FLIP_LEVELS = ("A", "B", "C")
 _GRADED_OFFSET = (0.00, 0.30, -0.05)
+_D_OFFSET = (0.00, 0.10, 0.20)
+"""How the 3-level ordinal ``D`` of the 36-category Goldstein shifts ``x2`` (0..100 scale)."""
 
 BlackboxFn = Callable[[Sequence[Point]], np.ndarray]
 
@@ -343,6 +345,60 @@ def goldstein_graded() -> Problem:
     )
 
 
+def goldstein36() -> Problem:
+    """3 continuous, 2 ordinal (4 and 3 levels), 12 categories: the base of the 36-category pair.
+
+    Shaped like a CNS heading scan without its third discrete variable: ``x3`` becomes a
+    continuous input, ``x4`` an ordinal with four levels, and ``D`` an ordinal with three
+    that shifts ``x2`` inside the polynomial, so its level correlations are graded.
+    """
+    space = DesignSpace(
+        {
+            **_two_continuous("x1", 0.0, 100.0, "x2", 0.0, 100.0),
+            "x3": Continuous(45.0, 55.0),
+            "x4": Ordinal([44.0, 48.0, 52.0, 56.0]),
+            "D": Ordinal([0, 1, 2]),
+        }
+    )
+    offsets = np.asarray(_D_OFFSET)
+
+    def fn(points: Sequence[Point]) -> np.ndarray:
+        d = _col(points, "D").astype(int)
+        return goldstein_h(
+            _col(points, "x1"),
+            _col(points, "x2") + 100.0 * offsets[d],
+            _col(points, "x3"),
+            _col(points, "x4"),
+        )
+
+    return Problem(
+        "goldstein36", space, fn, _quantile_threshold(space, fn, 0.55),
+        reference="Pelamatti et al. (2020), Eq. (36) with x3 continuous and an ordinal x2 offset",
+        description="Base of the 36-category pair: graded positive level correlations.",
+    )
+
+
+def goldstein36_graded() -> Problem:
+    """``goldstein36`` plus a nominal ``C`` shifting ``x1`` — 3 continuous, 36 categories, all
+    level correlations positive and graded. The control for ``goldstein36_flip``."""
+    base = goldstein36()
+    space = DesignSpace(
+        {**{n: base.space.variable(n) for n in base.space.names}, "C": Nominal(list(_FLIP_LEVELS))}
+    )
+    offsets = np.asarray(_GRADED_OFFSET)
+
+    def fn(points: Sequence[Point]) -> np.ndarray:
+        c = _cat(points, "C", _FLIP_LEVELS)
+        shifted = [{**p, "x1": p["x1"] + 100.0 * offsets[k]} for p, k in zip(points, c, strict=True)]
+        return base.function(shifted)
+
+    return Problem(
+        "goldstein36_graded", space, fn, _quantile_threshold(space, fn, 0.55),
+        reference="goldstein36 with the goldstein_graded x1 offset",
+        description="36 categories, graded positive level correlations.",
+    )
+
+
 PROBLEMS: dict[str, Callable[[], Problem]] = {
     # the paper's own
     "goldstein": goldstein,
@@ -362,6 +418,9 @@ PROBLEMS: dict[str, Callable[[], Problem]] = {
     "squares_flip": lambda: _add_flip(squares(), "squares_flip", 0.35),
     "himmelblau_flip": lambda: _add_flip(himmelblau(), "himmelblau_flip", 0.35),
     "goldstein_graded": goldstein_graded,
+    # 3 continuous x (4 x 3 x 3) discrete = 36 categories, the shape of a CNS heading scan
+    "goldstein36_graded": goldstein36_graded,
+    "goldstein36_flip": lambda: _add_flip(goldstein36(), "goldstein36_flip", 0.55),
 }
 """Every benchmark, by name. Values are builders — a :class:`Problem` is constructed on
 demand because calibrating a quantile threshold means evaluating the surface."""
