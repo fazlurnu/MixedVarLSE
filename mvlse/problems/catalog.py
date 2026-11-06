@@ -399,6 +399,56 @@ def goldstein36_graded() -> Problem:
     )
 
 
+def himmelblau36() -> Problem:
+    """3 continuous, 2 ordinal (4 and 3 levels), 12 categories: Himmelblau's four disjoint
+    blobs in the shape of a CNS heading scan without its third discrete variable.
+
+    ``x3`` slides the blobs along ``x1``; ``Z`` (4 levels) grows them and ``D`` (3 levels)
+    shrinks them while steepening the walls, so the level correlations are graded and the
+    set stays four islands in every category.
+    """
+    space = DesignSpace(
+        {
+            **_two_continuous("x1", -6.0, 6.0, "x2", -6.0, 6.0),
+            "x3": Continuous(-1.0, 1.0),
+            "Z": Ordinal([0, 1, 2, 3]),
+            "D": Ordinal([0, 1, 2]),
+        }
+    )
+
+    def fn(points: Sequence[Point]) -> np.ndarray:
+        z, d = _col(points, "Z"), _col(points, "D")
+        h = himmelblau_h(_col(points, "x1") - _col(points, "x3"), _col(points, "x2"))
+        return (1.0 + 0.10 * d) * h + 15.0 * (0.06 * d - 0.08 * z)
+
+    return Problem(
+        "himmelblau36", space, fn, 0.0,
+        reference="Moss et al., Bayesian Safety Validation, Sec. IV.A, with a sliding x3",
+        description="Base of the 36-category Himmelblau pair: four disjoint blobs, steep walls.",
+    )
+
+
+def himmelblau36_graded() -> Problem:
+    """``himmelblau36`` plus a nominal ``C`` shifting ``x2`` — 36 categories, four islands in
+    each, graded positive level correlations. The control for ``himmelblau36_flip``."""
+    base = himmelblau36()
+    space = DesignSpace(
+        {**{n: base.space.variable(n) for n in base.space.names}, "C": Nominal(list(_FLIP_LEVELS))}
+    )
+    offsets = np.asarray((0.0, 0.8, -0.3))
+
+    def fn(points: Sequence[Point]) -> np.ndarray:
+        c = _cat(points, "C", _FLIP_LEVELS)
+        shifted = [{**p, "x2": p["x2"] + offsets[k]} for p, k in zip(points, c, strict=True)]
+        return base.function(shifted)
+
+    return Problem(
+        "himmelblau36_graded", space, fn, 0.0,
+        reference="himmelblau36 with a categorical x2 offset",
+        description="36 categories, four disjoint blobs each, graded positive level correlations.",
+    )
+
+
 PROBLEMS: dict[str, Callable[[], Problem]] = {
     # the paper's own
     "goldstein": goldstein,
@@ -421,6 +471,8 @@ PROBLEMS: dict[str, Callable[[], Problem]] = {
     # 3 continuous x (4 x 3 x 3) discrete = 36 categories, the shape of a CNS heading scan
     "goldstein36_graded": goldstein36_graded,
     "goldstein36_flip": lambda: _add_flip(goldstein36(), "goldstein36_flip", 0.55),
+    "himmelblau36_graded": himmelblau36_graded,
+    "himmelblau36_flip": lambda: _add_flip(himmelblau36(), "himmelblau36_flip", 0.35),
 }
 """Every benchmark, by name. Values are builders — a :class:`Problem` is constructed on
 demand because calibrating a quantile threshold means evaluating the surface."""

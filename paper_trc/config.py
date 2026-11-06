@@ -94,7 +94,8 @@ EXPERIMENTS = {
     # Stage 1 verification: known-truth surfaces, the same active loop as the CNS runs.
     "exp0_verify": {
         # Same shape as exp1: 3 continuous, discrete levels (4, 3, 3) = 36 categories.
-        "problems": ["goldstein36_graded", "goldstein36_flip"],
+        # Goldstein: one smooth boundary per category. Himmelblau: disjoint islands, steep walls.
+        "problems": ["goldstein36_graded", "goldstein36_flip", "himmelblau36_graded", "himmelblau36_flip"],
         "methods": ["category_wise", "dc", "gower", "hs_dim"],
         "seeds": [1, 2, 3],
         "max_evaluations": 250,     # = exp1

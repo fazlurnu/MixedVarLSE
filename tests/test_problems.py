@@ -120,6 +120,6 @@ def test_unknown_problem_is_rejected():
 
 def test_goldstein36_pair_has_the_heading_scan_shape() -> None:
     """3 continuous, levels (4, 3, 3): the category count of a CNS heading scan (exp1)."""
-    for name in ("goldstein36_graded", "goldstein36_flip"):
+    for name in ("goldstein36_graded", "goldstein36_flip", "himmelblau36_graded", "himmelblau36_flip"):
         space = get_problem(name).space
         assert (space.q, space.n_levels, space.m) == (3, (4, 3, 3), 36)
