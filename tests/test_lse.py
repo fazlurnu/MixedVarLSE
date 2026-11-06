@@ -155,3 +155,19 @@ def test_snapshots_are_recorded_on_request(space):
                      max_evaluations=25, keep_snapshots=True, seed=1, verbose=False)
     assert len(result.snapshots) == len(result.rounds)
     assert result.snapshots[0][0].shape == (len(result.monitor),)
+
+
+def test_stop_when_confident_false_runs_to_the_budget() -> None:
+    """The confident stop can be switched off, and the run then uses its whole budget."""
+    from mvlse.problems import get_problem
+
+    prob = get_problem("goldstein36_graded")
+    kw = dict(threshold=prob.threshold, n_init_per_category=1, flip_tolerance=-1.0, verbose=False,
+              method="dc", seed=1)
+    stopped = run_lse(prob.space, prob, max_evaluations=250, **kw)
+    assert stopped.stop_reason.startswith("confident") and stopped.n_evaluations < 250
+    full = run_lse(prob.space, prob, max_evaluations=stopped.n_evaluations + 5,
+                   stop_when_confident=False, **kw)
+    assert full.n_evaluations == stopped.n_evaluations + 5
+    assert full.stop_reason.startswith("budget")
+    assert (full.w[: stopped.n_evaluations] == stopped.w).all()   # identical up to the stop

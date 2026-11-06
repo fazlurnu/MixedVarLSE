@@ -95,9 +95,13 @@ EXPERIMENTS = {
     "exp0_verify": {
         # Same shape as exp1: 3 continuous, discrete levels (4, 3, 3) = 36 categories.
         # Goldstein: one smooth boundary per category. Himmelblau: disjoint islands, steep walls.
-        "problems": ["goldstein36_graded", "goldstein36_flip", "himmelblau36_graded", "himmelblau36_flip"],
+        "problems": ["goldstein36_graded", "goldstein36_flip", "himmelblau36_graded"],
         "methods": ["category_wise", "dc", "gower", "hs_dim"],
-        "seeds": [1, 2, 3],
+        "seeds": list(range(1, 11)),        # 10 repetitions, as Pelamatti et al. (2020)
+        # Check of the confident stop: rerun without it where runs stop (Goldstein), and
+        # measure what F1 the remaining samples would have bought.
+        "no_stop_problems": ["goldstein36_graded", "goldstein36_flip"],
+        "no_stop_methods": ["dc", "gower", "hs_dim"],   # category_wise never stops
         "max_evaluations": 250,     # = exp1
         "n_init_per_category": 1,   # = exp1: 36 initial samples
     },

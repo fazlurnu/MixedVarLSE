@@ -71,6 +71,7 @@ class LseConfig:
     # stopping
     flip_window: int = 10
     flip_tolerance: float = 0.005
+    stop_when_confident: bool = True   # stop once max straddle < 0; False runs to the budget
 
     # fitting
     seed: int = 7
@@ -349,7 +350,7 @@ def run_lse(
 
         # -------------------------------------------------------------- stopping
         recent = [r.flip_fraction for r in result.rounds[-(config.flip_window - 1):]] + [flip]
-        if record.max_straddle < 0:
+        if config.stop_when_confident and record.max_straddle < 0:
             result.stop_reason = "confident (max straddle < 0)"
         elif index >= config.flip_window and max(recent) <= config.flip_tolerance:
             result.stop_reason = (
