@@ -48,9 +48,11 @@ LSE = {
     "correlation": "squar_exp",
     "batch_size": 1,
     "seed": SEED,
-    # Fixed budget, no plateau stop: a negative tolerance can never be met. The
-    # "confident" stop (max straddle < 0) stays active in mvlse -- say so in Sec. 4.3.
+    # Fixed budget, no early stopping of any kind: every run uses all its samples.
+    # A negative tolerance disables the plateau stop; stop_when_confident=False the
+    # max-straddle < 0 stop (Sec. 4.3).
     "flip_tolerance": -1.0,
+    "stop_when_confident": False,
     "keep_snapshots": False,
     "verbose": True,
 }
@@ -98,10 +100,6 @@ EXPERIMENTS = {
         "problems": ["goldstein36_graded", "goldstein36_flip", "himmelblau36_graded"],
         "methods": ["category_wise", "dc", "gower", "hs_dim"],
         "seeds": list(range(1, 11)),        # 10 repetitions, as Pelamatti et al. (2020)
-        # Check of the confident stop: rerun without it where runs stop (Goldstein), and
-        # measure what F1 the remaining samples would have bought.
-        "no_stop_problems": ["goldstein36_graded", "goldstein36_flip"],
-        "no_stop_methods": ["dc", "gower", "hs_dim"],   # category_wise never stops
         "max_evaluations": 250,     # = exp1
         "n_init_per_category": 1,   # = exp1: 36 initial samples
     },

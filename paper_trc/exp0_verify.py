@@ -28,6 +28,7 @@ def body(path):
             max_evaluations=P["max_evaluations"],
             n_init_per_category=P["n_init_per_category"],
             flip_tolerance=config.LSE["flip_tolerance"],
+            stop_when_confident=config.LSE["stop_when_confident"],
         )
         frame.to_csv(path / f"{name}.csv", index=False)
         outcome[name] = {"csv": f"{name}.csv", "seconds": round(time.perf_counter() - t0, 1)}
