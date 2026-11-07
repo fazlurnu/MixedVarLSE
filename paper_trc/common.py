@@ -16,6 +16,7 @@ import subprocess
 import sys
 from pathlib import Path
 
+import blueskycdarr
 import numpy as np
 
 import config
@@ -24,7 +25,8 @@ HERE = Path(__file__).resolve().parent
 RESULTS = HERE / "results"
 REPOS = {
     "mvlse": HERE.parent,
-    "blueskycdarr": Path.home() / "Projects" / "BlueSkyCDaRR",
+    # the checkout the installed package runs from (editable install), wherever it lives
+    "blueskycdarr": Path(blueskycdarr.__file__).resolve().parents[1],
 }
 
 
