@@ -1,0 +1,13 @@
+problem,method,hyperparameters,F1 at 100,F1 at 250,samples to F1 >= 0.99,max straddle < 0 first at,accuracy at 250,minutes per run
+goldstein36_graded,category_wise,108,0.6782 +- 0.0656,0.8218 +- 0.0205,never,never,77.99%,1.6
+goldstein36_graded,dc,6,0.9952 +- 0.0006,0.9997 +- 0.0001,67 +- 6,168 +- 4,99.96%,12.7
+goldstein36_graded,gower,6,0.9928 +- 0.0007,0.9995 +- 0.0001,81 +- 6,191 +- 4,99.95%,16.9
+goldstein36_graded,hs_dim,15,0.9984 +- 0.0004,0.9998 +- 0.0001,56 +- 6,126 +- 2,99.98%,79.5
+goldstein36_flip,category_wise,108,0.7135 +- 0.0204,0.8112 +- 0.0214,never,234 +- 13 (2/10 runs),77.86%,1.4
+goldstein36_flip,dc,6,0.9965 +- 0.0006,0.9996 +- 0.0002,60 +- 7,153 +- 7,99.95%,13.1
+goldstein36_flip,gower,6,0.9915 +- 0.0014,0.9992 +- 0.0003,89 +- 8,211 +- 9,99.91%,14.7
+goldstein36_flip,hs_dim,15,0.9992 +- 0.0002,0.9999 +- 0.0001,42 +- 4,106 +- 7,99.99%,84.1
+himmelblau36_graded,category_wise,108,0.0226 +- 0.0196,0.0791 +- 0.0121,never,never,93.52%,1.6
+himmelblau36_graded,dc,6,0.4223 +- 0.0999,0.7050 +- 0.0617,never,never,96.86%,8.1
+himmelblau36_graded,gower,6,0.4904 +- 0.0494,0.8112 +- 0.0424,never,never,98.01%,9.0
+himmelblau36_graded,hs_dim,15,0.5174 +- 0.0547,0.8825 +- 0.0256,never,never,98.71%,56.3
