@@ -7,6 +7,7 @@ commit, rerun. Never edit a script that already has results.
 Units: SI throughout (m, m/s, s, deg). Knots appear only to name the speed class.
 """
 
+import os
 from dataclasses import replace
 
 from blueskycdarr.aircraft import FIXEDWING, MULTIROTOR, AircraftModel
@@ -40,7 +41,10 @@ N_ENCOUNTERS = 100_000     # per sample: ~100 LoS expected at tau, 95% CI [0.81,
                            # tight enough that the GP takes each estimate as exact (Sec. 4.1)
 TAU = -3.0                 # log10 of the P(LoS) = 1e-3 threshold
 SEED = 7
-N_JOBS = 6                 # capped: n_jobs=-1 ran the 16 GB laptop out of memory at tlos=400
+# Worker processes per sample. Set per machine with TRC_N_JOBS (e.g. 100 on the server);
+# the default 6 suits the 16 GB laptop (n_jobs=-1 ran it out of memory at tlos=400).
+# Results do not depend on it: every episode's streams hang off its index alone.
+N_JOBS = int(os.environ.get("TRC_N_JOBS", "6"))
 
 # --------------------------------------------------------------- the estimator
 LSE = {

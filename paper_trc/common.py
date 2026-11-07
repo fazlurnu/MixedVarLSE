@@ -96,7 +96,7 @@ def start_manifest(experiment: str, tag: str, state: dict, params: dict, argv: l
         "code": state,
         "params": _plain(params),
         "shared": _plain({
-            "FIXED": config.FIXED, "N_ENCOUNTERS": config.N_ENCOUNTERS,
+            "FIXED": config.FIXED, "N_ENCOUNTERS": config.N_ENCOUNTERS, "N_JOBS": config.N_JOBS,
             "TAU": config.TAU, "SEED": config.SEED, "LSE": config.LSE,
             "RESOLVER": config.RESOLVER, "RECOVERY": config.RECOVERY,
         }),
