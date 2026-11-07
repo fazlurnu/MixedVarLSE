@@ -61,6 +61,14 @@ class LseConfig:
     # acquisition
     kappa: float = DEFAULT_KAPPA
     min_batch_distance: float = 0.0
+    # "straddle" (Bryan et al. 2005): kappa*s - |mu - tau| from the current model, every round.
+    # "gotovos" (Gotovos et al. 2013, LSE): each candidate's interval mu +- beta_sqrt*s is
+    # intersected with its previous ones, a candidate whose interval clears tau (by epsilon) is
+    # classified for good and leaves the pool, and the ambiguity min(hi - tau, tau - lo) of the
+    # intersected interval picks the next sample. For one interval the two scores coincide.
+    acquisition: str = "straddle"
+    beta_sqrt: float = 3.0              # gotovos only; their experiments used beta^(1/2) = 3
+    epsilon: float = 0.0                # gotovos only: accuracy tolerance
 
     # candidate and monitor sets (None -> chosen from q)
     n_candidates_per_axis: int = 15
@@ -89,6 +97,8 @@ class LseConfig:
             raise ValueError(f"batch_size must be >= 1, got {self.batch_size}")
         if self.max_evaluations < 2:
             raise ValueError(f"max_evaluations must be >= 2, got {self.max_evaluations}")
+        if self.acquisition not in ("straddle", "gotovos"):
+            raise ValueError(f"acquisition must be 'straddle' or 'gotovos', got {self.acquisition!r}")
 
 
 @dataclass
@@ -102,6 +112,7 @@ class Round:
     flip_fraction: float
     picked: list[int] = field(default_factory=list)
     seconds: float = 0.0
+    unclassified_fraction: float = float("nan")    # gotovos: candidates not yet classified
 
     def __str__(self) -> str:
         return (
@@ -127,6 +138,11 @@ class LseResult:
     monitor: np.ndarray = field(default_factory=lambda: np.empty((0, 0)), repr=False)
     snapshots: list[tuple[np.ndarray, np.ndarray]] = field(default_factory=list, repr=False)
     seconds: float = 0.0
+    # gotovos: the candidate set, each candidate's intersected interval, and its label
+    # (0 unclassified, 1 inside the level set, 2 outside); None for the straddle
+    candidates: np.ndarray | None = field(default=None, repr=False)
+    interval: tuple[np.ndarray, np.ndarray] | None = field(default=None, repr=False)
+    labels: np.ndarray | None = field(default=None, repr=False)
 
     # ------------------------------------------------------------------ access
     @property
@@ -312,6 +328,12 @@ def run_lse(
     previous_class: np.ndarray | None = None
     warm: object | None = None
     spent: set[int] = set()
+    gotovos = config.acquisition == "gotovos"
+    if gotovos:
+        c_lo = np.full(len(candidates), -np.inf)
+        c_hi = np.full(len(candidates), np.inf)
+        labels = np.zeros(len(candidates), dtype=int)
+        result.candidates, result.interval, result.labels = candidates, (c_lo, c_hi), labels
 
     # ------------------------------------------------------------------- rounds
     for index in range(config.max_evaluations):
@@ -334,7 +356,23 @@ def run_lse(
         ambiguous = float(np.mean(straddle(mu_m, sd_m, config.threshold, config.kappa) > 0))
 
         mu_c, sd_c = model.predict(candidates)
-        scores = straddle(mu_c, sd_c, config.threshold, config.kappa)
+        if gotovos:
+            tau, eps = config.threshold, config.epsilon
+            open_ = labels == 0
+            q_lo, q_hi = mu_c - config.beta_sqrt * sd_c, mu_c + config.beta_sqrt * sd_c
+            # Intersect only the unclassified (their line 6). Refitted hyperparameters can make
+            # the new interval miss the old one entirely; restart from the new one there.
+            c_lo[open_] = np.maximum(c_lo[open_], q_lo[open_])
+            c_hi[open_] = np.minimum(c_hi[open_], q_hi[open_])
+            disjoint = open_ & (c_lo > c_hi)
+            c_lo[disjoint], c_hi[disjoint] = q_lo[disjoint], q_hi[disjoint]
+            above = open_ & (c_lo + eps > tau)
+            below = open_ & ~above & (c_hi - eps <= tau)
+            labels[above] = 1 if config.greater_is_inside else 2
+            labels[below] = 2 if config.greater_is_inside else 1
+            scores = np.where(labels == 0, np.minimum(c_hi - tau, tau - c_lo), -np.inf)
+        else:
+            scores = straddle(mu_c, sd_c, config.threshold, config.kappa)
         if spent:
             scores[list(spent)] = -np.inf
 
@@ -344,6 +382,7 @@ def run_lse(
             max_straddle=float(scores.max()),
             ambiguous_fraction=ambiguous,
             flip_fraction=flip,
+            unclassified_fraction=float(np.mean(labels == 0)) if gotovos else float("nan"),
         )
         if config.keep_snapshots:
             result.snapshots.append((mu_m, sd_m))

@@ -1,0 +1,2533 @@
+{
+  "experiment": "exp1_heading",
+  "tag": "campaign",
+  "status": "done",
+  "started": "2026-11-07T15:48:20",
+  "finished": "2026-11-07T21:47:43",
+  "argv": [
+    "exp1_heading.py"
+  ],
+  "code": {
+    "mvlse": {
+      "commit": "566c532ab3f90cd763d6f307b47314b2c22fc7d8",
+      "dirty": false
+    },
+    "blueskycdarr": {
+      "commit": "030c0f459a3c5491cef88485e2672aef60a14179",
+      "dirty": false
+    }
+  },
+  "params": {
+    "space": {
+      "p_reception": {
+        "type": "Continuous",
+        "lower": 0.1,
+        "upper": 1.0
+      },
+      "max_range_m": {
+        "type": "Continuous",
+        "lower": 300.0,
+        "upper": 15000.0
+      },
+      "pos_ci95": {
+        "type": "Ordinal",
+        "levels": [
+          3.0,
+          10.0,
+          30.0,
+          92.6
+        ]
+      },
+      "vel_ci95": {
+        "type": "Ordinal",
+        "levels": [
+          1.0,
+          3.0,
+          10.0
+        ]
+      },
+      "dpsi": {
+        "type": "Continuous",
+        "lower": 2.0,
+        "upper": 180.0
+      },
+      "speed": {
+        "type": "Ordinal",
+        "levels": [
+          10.28888,
+          20.57776,
+          30.86664
+        ]
+      }
+    },
+    "max_evaluations": 250,
+    "n_init_per_category": 1,
+    "bracket_headings": [
+      90.0,
+      170.0
+    ]
+  },
+  "shared": {
+    "FIXED": {
+      "rpz": 150.0,
+      "dcpa": 0.0,
+      "aim": "flown",
+      "tlos": 400.0,
+      "t_lookahead": 300.0,
+      "t_max": 900.0,
+      "resolution_margin": 1.05
+    },
+    "N_ENCOUNTERS": 100000,
+    "N_JOBS": 100,
+    "TAU": -3.0,
+    "SEED": 7,
+    "LSE": {
+      "method": "hs_dim",
+      "correlation": "squar_exp",
+      "batch_size": 1,
+      "seed": 7,
+      "flip_tolerance": -1.0,
+      "stop_when_confident": false,
+      "keep_snapshots": false,
+      "verbose": true
+    },
+    "RESOLVER": "MVP",
+    "RECOVERY": "ProbabilisticFTR"
+  },
+  "outcome": {
+    "n_evaluations": 250,
+    "n_initial": 36,
+    "stop_reason": "budget (250 evaluations)",
+    "seconds": 21563.2,
+    "final_max_straddle": 1.484248405668417,
+    "final_ambiguous_fraction": 0.2991536458333333,
+    "converged": false,
+    "rounds": [
+      {
+        "index": 0,
+        "n_evaluations": 36,
+        "max_straddle": 0.8620978426138173,
+        "ambiguous_fraction": 0.05946180555555555,
+        "flip_fraction": 1.0,
+        "picked": [
+          4436
+        ],
+        "seconds": 131.7174920788966
+      },
+      {
+        "index": 1,
+        "n_evaluations": 37,
+        "max_straddle": 0.5680909614448555,
+        "ambiguous_fraction": 0.026529947916666668,
+        "flip_fraction": 0.004720052083333333,
+        "picked": [
+          3273
+        ],
+        "seconds": 58.72108220006339
+      },
+      {
+        "index": 2,
+        "n_evaluations": 38,
+        "max_straddle": 0.9628186562717048,
+        "ambiguous_fraction": 0.03184678819444445,
+        "flip_fraction": 0.011284722222222222,
+        "picked": [
+          8054
+        ],
+        "seconds": 131.82103963405825
+      },
+      {
+        "index": 3,
+        "n_evaluations": 39,
+        "max_straddle": 0.6153482800708602,
+        "ambiguous_fraction": 0.032552083333333336,
+        "flip_fraction": 0.004177517361111111,
+        "picked": [
+          1225
+        ],
+        "seconds": 96.89271863014437
+      },
+      {
+        "index": 4,
+        "n_evaluations": 40,
+        "max_straddle": 0.5844088206040119,
+        "ambiguous_fraction": 0.028157552083333332,
+        "flip_fraction": 0.004720052083333333,
+        "picked": [
+          2409
+        ],
+        "seconds": 42.677911369130015
+      },
+      {
+        "index": 5,
+        "n_evaluations": 41,
+        "max_straddle": 0.6940815367014409,
+        "ambiguous_fraction": 0.037651909722222224,
+        "flip_fraction": 0.006022135416666667,
+        "picked": [
+          3190
+        ],
+        "seconds": 86.8936513280496
+      },
+      {
+        "index": 6,
+        "n_evaluations": 42,
+        "max_straddle": 0.7667248059032797,
+        "ambiguous_fraction": 0.05311414930555555,
+        "flip_fraction": 0.008572048611111112,
+        "picked": [
+          2614
+        ],
+        "seconds": 89.55619337386452
+      },
+      {
+        "index": 7,
+        "n_evaluations": 43,
+        "max_straddle": 1.0272947388026734,
+        "ambiguous_fraction": 0.06825086805555555,
+        "flip_fraction": 0.008138020833333334,
+        "picked": [
+          2272
+        ],
+        "seconds": 125.74898862000555
+      },
+      {
+        "index": 8,
+        "n_evaluations": 44,
+        "max_straddle": 1.2365289054507504,
+        "ambiguous_fraction": 0.07166883680555555,
+        "flip_fraction": 0.012912326388888888,
+        "picked": [
+          4147
+        ],
+        "seconds": 44.086072091944516
+      },
+      {
+        "index": 9,
+        "n_evaluations": 45,
+        "max_straddle": 1.0400643244264784,
+        "ambiguous_fraction": 0.06016710069444445,
+        "flip_fraction": 0.0009223090277777778,
+        "picked": [
+          3689
+        ],
+        "seconds": 40.02313728816807
+      },
+      {
+        "index": 10,
+        "n_evaluations": 46,
+        "max_straddle": 0.7359597170575272,
+        "ambiguous_fraction": 0.05197482638888889,
+        "flip_fraction": 0.023274739583333332,
+        "picked": [
+          982
+        ],
+        "seconds": 97.36942961416207
+      },
+      {
+        "index": 11,
+        "n_evaluations": 47,
+        "max_straddle": 0.7250450783145508,
+        "ambiguous_fraction": 0.049641927083333336,
+        "flip_fraction": 0.0015733506944444445,
+        "picked": [
+          9116
+        ],
+        "seconds": 119.82168457703665
+      },
+      {
+        "index": 12,
+        "n_evaluations": 48,
+        "max_straddle": 2.0729863314757706,
+        "ambiguous_fraction": 0.1919487847222222,
+        "flip_fraction": 0.032172309027777776,
+        "picked": [
+          5904
+        ],
+        "seconds": 122.17812924389727
+      },
+      {
+        "index": 13,
+        "n_evaluations": 49,
+        "max_straddle": 0.5395168158128738,
+        "ambiguous_fraction": 0.028645833333333332,
+        "flip_fraction": 0.032280815972222224,
+        "picked": [
+          201
+        ],
+        "seconds": 117.08521076198667
+      },
+      {
+        "index": 14,
+        "n_evaluations": 50,
+        "max_straddle": 2.0465575218976757,
+        "ambiguous_fraction": 0.14632161458333334,
+        "flip_fraction": 0.015950520833333332,
+        "picked": [
+          6851
+        ],
+        "seconds": 43.93950743600726
+      },
+      {
+        "index": 15,
+        "n_evaluations": 51,
+        "max_straddle": 0.5270120780772719,
+        "ambiguous_fraction": 0.02392578125,
+        "flip_fraction": 0.014865451388888888,
+        "picked": [
+          1501
+        ],
+        "seconds": 40.98411537683569
+      },
+      {
+        "index": 16,
+        "n_evaluations": 52,
+        "max_straddle": 0.6117221936773242,
+        "ambiguous_fraction": 0.02978515625,
+        "flip_fraction": 0.007052951388888889,
+        "picked": [
+          4450
+        ],
+        "seconds": 123.40071573294699
+      },
+      {
+        "index": 17,
+        "n_evaluations": 53,
+        "max_straddle": 0.7113841832145338,
+        "ambiguous_fraction": 0.029839409722222224,
+        "flip_fraction": 0.005696614583333333,
+        "picked": [
+          1201
+        ],
+        "seconds": 42.196794165996835
+      },
+      {
+        "index": 18,
+        "n_evaluations": 54,
+        "max_straddle": 0.9257456113391349,
+        "ambiguous_fraction": 0.056586371527777776,
+        "flip_fraction": 0.013617621527777778,
+        "picked": [
+          5903
+        ],
+        "seconds": 45.02020429703407
+      },
+      {
+        "index": 19,
+        "n_evaluations": 55,
+        "max_straddle": 0.8647832660981606,
+        "ambiguous_fraction": 0.04551866319444445,
+        "flip_fraction": 0.014377170138888888,
+        "picked": [
+          3342
+        ],
+        "seconds": 96.17754996707663
+      },
+      {
+        "index": 20,
+        "n_evaluations": 56,
+        "max_straddle": 0.5649360032885273,
+        "ambiguous_fraction": 0.031087239583333332,
+        "flip_fraction": 0.010579427083333334,
+        "picked": [
+          1513
+        ],
+        "seconds": 72.92816408118233
+      },
+      {
+        "index": 21,
+        "n_evaluations": 57,
+        "max_straddle": 0.4834678388733221,
+        "ambiguous_fraction": 0.027506510416666668,
+        "flip_fraction": 0.00021701388888888888,
+        "picked": [
+          3249
+        ],
+        "seconds": 51.7653592559509
+      },
+      {
+        "index": 22,
+        "n_evaluations": 58,
+        "max_straddle": 0.6503701871113771,
+        "ambiguous_fraction": 0.03146701388888889,
+        "flip_fraction": 0.00341796875,
+        "picked": [
+          3037
+        ],
+        "seconds": 41.87657181406394
+      },
+      {
+        "index": 23,
+        "n_evaluations": 59,
+        "max_straddle": 0.6701895598858413,
+        "ambiguous_fraction": 0.048014322916666664,
+        "flip_fraction": 0.008029513888888888,
+        "picked": [
+          3702
+        ],
+        "seconds": 73.05656945891678
+      },
+      {
+        "index": 24,
+        "n_evaluations": 60,
+        "max_straddle": 0.6022254971937671,
+        "ambiguous_fraction": 0.04372829861111111,
+        "flip_fraction": 0.003634982638888889,
+        "picked": [
+          4245
+        ],
+        "seconds": 65.67651112191379
+      },
+      {
+        "index": 25,
+        "n_evaluations": 61,
+        "max_straddle": 1.2683811837348256,
+        "ambiguous_fraction": 0.061360677083333336,
+        "flip_fraction": 0.006239149305555556,
+        "picked": [
+          988
+        ],
+        "seconds": 92.18410391476937
+      },
+      {
+        "index": 26,
+        "n_evaluations": 62,
+        "max_straddle": 0.627693176694719,
+        "ambiguous_fraction": 0.03542751736111111,
+        "flip_fraction": 0.002007378472222222,
+        "picked": [
+          2761
+        ],
+        "seconds": 124.73670633207075
+      },
+      {
+        "index": 27,
+        "n_evaluations": 63,
+        "max_straddle": 1.382929197189273,
+        "ambiguous_fraction": 0.047037760416666664,
+        "flip_fraction": 0.008409288194444444,
+        "picked": [
+          647
+        ],
+        "seconds": 39.42724140896462
+      },
+      {
+        "index": 28,
+        "n_evaluations": 64,
+        "max_straddle": 1.4950699671446503,
+        "ambiguous_fraction": 0.06754557291666667,
+        "flip_fraction": 0.015842013888888888,
+        "picked": [
+          51
+        ],
+        "seconds": 44.962481929920614
+      },
+      {
+        "index": 29,
+        "n_evaluations": 65,
+        "max_straddle": 1.048584533675475,
+        "ambiguous_fraction": 0.05311414930555555,
+        "flip_fraction": 0.006401909722222222,
+        "picked": [
+          2439
+        ],
+        "seconds": 41.983147053048015
+      },
+      {
+        "index": 30,
+        "n_evaluations": 66,
+        "max_straddle": 0.9601758141283482,
+        "ambiguous_fraction": 0.048990885416666664,
+        "flip_fraction": 0.002495659722222222,
+        "picked": [
+          559
+        ],
+        "seconds": 59.57375729386695
+      },
+      {
+        "index": 31,
+        "n_evaluations": 67,
+        "max_straddle": 1.4048163456633795,
+        "ambiguous_fraction": 0.0719943576388889,
+        "flip_fraction": 0.011935763888888888,
+        "picked": [
+          5195
+        ],
+        "seconds": 70.03578727995045
+      },
+      {
+        "index": 32,
+        "n_evaluations": 68,
+        "max_straddle": 1.1108668685331606,
+        "ambiguous_fraction": 0.078125,
+        "flip_fraction": 0.006456163194444444,
+        "picked": [
+          4726
+        ],
+        "seconds": 100.86974920006469
+      },
+      {
+        "index": 33,
+        "n_evaluations": 69,
+        "max_straddle": 0.9849486738305808,
+        "ambiguous_fraction": 0.07926432291666667,
+        "flip_fraction": 0.0016276041666666667,
+        "picked": [
+          1415
+        ],
+        "seconds": 44.50214696396142
+      },
+      {
+        "index": 34,
+        "n_evaluations": 70,
+        "max_straddle": 1.603584589283848,
+        "ambiguous_fraction": 0.15587022569444445,
+        "flip_fraction": 0.009874131944444444,
+        "picked": [
+          1355
+        ],
+        "seconds": 142.8455923560541
+      },
+      {
+        "index": 35,
+        "n_evaluations": 71,
+        "max_straddle": 1.625098751089733,
+        "ambiguous_fraction": 0.17078993055555555,
+        "flip_fraction": 0.008572048611111112,
+        "picked": [
+          6808
+        ],
+        "seconds": 158.59485682891682
+      },
+      {
+        "index": 36,
+        "n_evaluations": 72,
+        "max_straddle": 1.42239985183993,
+        "ambiguous_fraction": 0.15125868055555555,
+        "flip_fraction": 0.0008680555555555555,
+        "picked": [
+          2093
+        ],
+        "seconds": 46.63250557798892
+      },
+      {
+        "index": 37,
+        "n_evaluations": 73,
+        "max_straddle": 1.099119019728758,
+        "ambiguous_fraction": 0.1022677951388889,
+        "flip_fraction": 0.006890190972222222,
+        "picked": [
+          6442
+        ],
+        "seconds": 112.830120037077
+      },
+      {
+        "index": 38,
+        "n_evaluations": 74,
+        "max_straddle": 1.0755123303438778,
+        "ambiguous_fraction": 0.08485243055555555,
+        "flip_fraction": 0.0003255208333333333,
+        "picked": [
+          6535
+        ],
+        "seconds": 44.62402255088091
+      },
+      {
+        "index": 39,
+        "n_evaluations": 75,
+        "max_straddle": 1.5198597335180706,
+        "ambiguous_fraction": 0.12261284722222222,
+        "flip_fraction": 0.004177517361111111,
+        "picked": [
+          6620
+        ],
+        "seconds": 111.99539920897223
+      },
+      {
+        "index": 40,
+        "n_evaluations": 76,
+        "max_straddle": 1.3379707830923608,
+        "ambiguous_fraction": 0.11165364583333333,
+        "flip_fraction": 0.001681857638888889,
+        "picked": [
+          2099
+        ],
+        "seconds": 42.77887251204811
+      },
+      {
+        "index": 41,
+        "n_evaluations": 77,
+        "max_straddle": 1.1080811814612088,
+        "ambiguous_fraction": 0.10384114583333333,
+        "flip_fraction": 0.0007052951388888889,
+        "picked": [
+          4745
+        ],
+        "seconds": 75.46086465008557
+      },
+      {
+        "index": 42,
+        "n_evaluations": 78,
+        "max_straddle": 1.426978173975765,
+        "ambiguous_fraction": 0.11604817708333333,
+        "flip_fraction": 0.009331597222222222,
+        "picked": [
+          6198
+        ],
+        "seconds": 139.37573350407183
+      },
+      {
+        "index": 43,
+        "n_evaluations": 79,
+        "max_straddle": 1.4079520354449082,
+        "ambiguous_fraction": 0.14246961805555555,
+        "flip_fraction": 0.007052951388888889,
+        "picked": [
+          5977
+        ],
+        "seconds": 64.06244172016159
+      },
+      {
+        "index": 44,
+        "n_evaluations": 80,
+        "max_straddle": 1.324953343560885,
+        "ambiguous_fraction": 0.13606770833333334,
+        "flip_fraction": 0.002387152777777778,
+        "picked": [
+          6627
+        ],
+        "seconds": 78.31497373920865
+      },
+      {
+        "index": 45,
+        "n_evaluations": 81,
+        "max_straddle": 1.134184144554622,
+        "ambiguous_fraction": 0.1213650173611111,
+        "flip_fraction": 0.00016276041666666666,
+        "picked": [
+          774
+        ],
+        "seconds": 71.85014821006916
+      },
+      {
+        "index": 46,
+        "n_evaluations": 82,
+        "max_straddle": 1.0793486051231282,
+        "ambiguous_fraction": 0.11534288194444445,
+        "flip_fraction": 0.0035807291666666665,
+        "picked": [
+          933
+        ],
+        "seconds": 60.98440138087608
+      },
+      {
+        "index": 47,
+        "n_evaluations": 83,
+        "max_straddle": 0.9231900033691252,
+        "ambiguous_fraction": 0.11241319444444445,
+        "flip_fraction": 0.0028211805555555555,
+        "picked": [
+          5590
+        ],
+        "seconds": 94.18241411191411
+      },
+      {
+        "index": 48,
+        "n_evaluations": 84,
+        "max_straddle": 0.8800864019011838,
+        "ambiguous_fraction": 0.10633680555555555,
+        "flip_fraction": 0.0007595486111111111,
+        "picked": [
+          1487
+        ],
+        "seconds": 50.28580144606531
+      },
+      {
+        "index": 49,
+        "n_evaluations": 85,
+        "max_straddle": 1.558292466746115,
+        "ambiguous_fraction": 0.1880425347222222,
+        "flip_fraction": 0.011013454861111112,
+        "picked": [
+          2083
+        ],
+        "seconds": 70.03843077411875
+      },
+      {
+        "index": 50,
+        "n_evaluations": 86,
+        "max_straddle": 1.1954166745765034,
+        "ambiguous_fraction": 0.17333984375,
+        "flip_fraction": 0.0002712673611111111,
+        "picked": [
+          995
+        ],
+        "seconds": 55.97652617213316
+      },
+      {
+        "index": 51,
+        "n_evaluations": 87,
+        "max_straddle": 1.093901658590984,
+        "ambiguous_fraction": 0.16145833333333334,
+        "flip_fraction": 0.00021701388888888888,
+        "picked": [
+          1065
+        ],
+        "seconds": 79.7614209279418
+      },
+      {
+        "index": 52,
+        "n_evaluations": 88,
+        "max_straddle": 1.0122570166143272,
+        "ambiguous_fraction": 0.15169270833333334,
+        "flip_fraction": 0.0010850694444444445,
+        "picked": [
+          5513
+        ],
+        "seconds": 82.71634611603804
+      },
+      {
+        "index": 53,
+        "n_evaluations": 89,
+        "max_straddle": 0.9162271549211907,
+        "ambiguous_fraction": 0.1439887152777778,
+        "flip_fraction": 0.004123263888888889,
+        "picked": [
+          1430
+        ],
+        "seconds": 64.7011695180554
+      },
+      {
+        "index": 54,
+        "n_evaluations": 90,
+        "max_straddle": 0.9705765628402845,
+        "ambiguous_fraction": 0.1501736111111111,
+        "flip_fraction": 0.004014756944444444,
+        "picked": [
+          5561
+        ],
+        "seconds": 102.98078649817035
+      },
+      {
+        "index": 55,
+        "n_evaluations": 91,
+        "max_straddle": 0.9304334688287474,
+        "ambiguous_fraction": 0.14208984375,
+        "flip_fraction": 0.00037977430555555556,
+        "picked": [
+          5255
+        ],
+        "seconds": 43.775807060999796
+      },
+      {
+        "index": 56,
+        "n_evaluations": 92,
+        "max_straddle": 1.921880216692161,
+        "ambiguous_fraction": 0.2789171006944444,
+        "flip_fraction": 0.03591579861111111,
+        "picked": [
+          596
+        ],
+        "seconds": 95.88987881410867
+      },
+      {
+        "index": 57,
+        "n_evaluations": 93,
+        "max_straddle": 2.33200240035818,
+        "ambiguous_fraction": 0.3629014756944444,
+        "flip_fraction": 0.042914496527777776,
+        "picked": [
+          3011
+        ],
+        "seconds": 42.53755388897844
+      },
+      {
+        "index": 58,
+        "n_evaluations": 94,
+        "max_straddle": 2.288359568643512,
+        "ambiguous_fraction": 0.3474934895833333,
+        "flip_fraction": 0.0035264756944444445,
+        "picked": [
+          4483
+        ],
+        "seconds": 103.64653012598865
+      },
+      {
+        "index": 59,
+        "n_evaluations": 95,
+        "max_straddle": 1.972143714054187,
+        "ambiguous_fraction": 0.3405490451388889,
+        "flip_fraction": 0.004069010416666667,
+        "picked": [
+          2529
+        ],
+        "seconds": 44.912379598012194
+      },
+      {
+        "index": 60,
+        "n_evaluations": 96,
+        "max_straddle": 1.9085451816324492,
+        "ambiguous_fraction": 0.3426649305555556,
+        "flip_fraction": 0.011664496527777778,
+        "picked": [
+          3318
+        ],
+        "seconds": 87.8629263760522
+      },
+      {
+        "index": 61,
+        "n_evaluations": 97,
+        "max_straddle": 1.7838177858806692,
+        "ambiguous_fraction": 0.3412000868055556,
+        "flip_fraction": 0.007649739583333333,
+        "picked": [
+          665
+        ],
+        "seconds": 43.15357720898464
+      },
+      {
+        "index": 62,
+        "n_evaluations": 98,
+        "max_straddle": 1.483464201748289,
+        "ambiguous_fraction": 0.1904839409722222,
+        "flip_fraction": 0.05908203125,
+        "picked": [
+          6759
+        ],
+        "seconds": 68.604097265983
+      },
+      {
+        "index": 63,
+        "n_evaluations": 99,
+        "max_straddle": 1.2403706377355717,
+        "ambiguous_fraction": 0.17735460069444445,
+        "flip_fraction": 0.0007595486111111111,
+        "picked": [
+          5939
+        ],
+        "seconds": 46.58966550603509
+      },
+      {
+        "index": 64,
+        "n_evaluations": 100,
+        "max_straddle": 1.255757365302897,
+        "ambiguous_fraction": 0.1934136284722222,
+        "flip_fraction": 0.005750868055555556,
+        "picked": [
+          2092
+        ],
+        "seconds": 145.03228140017018
+      },
+      {
+        "index": 65,
+        "n_evaluations": 101,
+        "max_straddle": 1.9893316340252918,
+        "ambiguous_fraction": 0.3592664930555556,
+        "flip_fraction": 0.057671440972222224,
+        "picked": [
+          3117
+        ],
+        "seconds": 45.977219447959214
+      },
+      {
+        "index": 66,
+        "n_evaluations": 102,
+        "max_straddle": 1.1076536084820907,
+        "ambiguous_fraction": 0.1718207465277778,
+        "flip_fraction": 0.05810546875,
+        "picked": [
+          2839
+        ],
+        "seconds": 43.02926322002895
+      },
+      {
+        "index": 67,
+        "n_evaluations": 103,
+        "max_straddle": 1.2539660790438127,
+        "ambiguous_fraction": 0.2567274305555556,
+        "flip_fraction": 0.005425347222222222,
+        "picked": [
+          5511
+        ],
+        "seconds": 42.05227765091695
+      },
+      {
+        "index": 68,
+        "n_evaluations": 104,
+        "max_straddle": 2.505616545786952,
+        "ambiguous_fraction": 0.49609375,
+        "flip_fraction": 0.035970052083333336,
+        "picked": [
+          9135
+        ],
+        "seconds": 56.09811403695494
+      },
+      {
+        "index": 69,
+        "n_evaluations": 105,
+        "max_straddle": 2.189369887272027,
+        "ambiguous_fraction": 0.4790581597222222,
+        "flip_fraction": 0.007432725694444444,
+        "picked": [
+          6304
+        ],
+        "seconds": 85.06935184798203
+      },
+      {
+        "index": 70,
+        "n_evaluations": 106,
+        "max_straddle": 2.00053863997134,
+        "ambiguous_fraction": 0.4957139756944444,
+        "flip_fraction": 0.008517795138888888,
+        "picked": [
+          6017
+        ],
+        "seconds": 71.23307293606922
+      },
+      {
+        "index": 71,
+        "n_evaluations": 107,
+        "max_straddle": 1.1567956079119228,
+        "ambiguous_fraction": 0.20556640625,
+        "flip_fraction": 0.03591579861111111,
+        "picked": [
+          6858
+        ],
+        "seconds": 95.97685891808942
+      },
+      {
+        "index": 72,
+        "n_evaluations": 108,
+        "max_straddle": 1.1094717670567968,
+        "ambiguous_fraction": 0.1902126736111111,
+        "flip_fraction": 0.00043402777777777775,
+        "picked": [
+          2981
+        ],
+        "seconds": 45.33954791817814
+      },
+      {
+        "index": 73,
+        "n_evaluations": 109,
+        "max_straddle": 1.341310561140835,
+        "ambiguous_fraction": 0.2492947048611111,
+        "flip_fraction": 0.007052951388888889,
+        "picked": [
+          1494
+        ],
+        "seconds": 105.05599906505086
+      },
+      {
+        "index": 74,
+        "n_evaluations": 110,
+        "max_straddle": 1.3370692293387267,
+        "ambiguous_fraction": 0.24397786458333334,
+        "flip_fraction": 0.0007595486111111111,
+        "picked": [
+          1020
+        ],
+        "seconds": 94.74630999704823
+      },
+      {
+        "index": 75,
+        "n_evaluations": 111,
+        "max_straddle": 1.183083791787294,
+        "ambiguous_fraction": 0.2216254340277778,
+        "flip_fraction": 0.0008680555555555555,
+        "picked": [
+          793
+        ],
+        "seconds": 95.42422601208091
+      },
+      {
+        "index": 76,
+        "n_evaluations": 112,
+        "max_straddle": 1.0992486447401724,
+        "ambiguous_fraction": 0.21202256944444445,
+        "flip_fraction": 0.00043402777777777775,
+        "picked": [
+          1334
+        ],
+        "seconds": 92.89711979683489
+      },
+      {
+        "index": 77,
+        "n_evaluations": 113,
+        "max_straddle": 1.0648595769603686,
+        "ambiguous_fraction": 0.19807942708333334,
+        "flip_fraction": 0.002170138888888889,
+        "picked": [
+          2222
+        ],
+        "seconds": 137.78024615091272
+      },
+      {
+        "index": 78,
+        "n_evaluations": 114,
+        "max_straddle": 1.0397203524164225,
+        "ambiguous_fraction": 0.18614366319444445,
+        "flip_fraction": 0.0003255208333333333,
+        "picked": [
+          843
+        ],
+        "seconds": 116.34129613614641
+      },
+      {
+        "index": 79,
+        "n_evaluations": 115,
+        "max_straddle": 0.9526976188878196,
+        "ambiguous_fraction": 0.17881944444444445,
+        "flip_fraction": 0.00010850694444444444,
+        "picked": [
+          8492
+        ],
+        "seconds": 89.35734898014925
+      },
+      {
+        "index": 80,
+        "n_evaluations": 116,
+        "max_straddle": 0.9451783830619782,
+        "ambiguous_fraction": 0.1731228298611111,
+        "flip_fraction": 0.0003255208333333333,
+        "picked": [
+          781
+        ],
+        "seconds": 93.86898197210394
+      },
+      {
+        "index": 81,
+        "n_evaluations": 117,
+        "max_straddle": 0.9577190331852197,
+        "ambiguous_fraction": 0.16145833333333334,
+        "flip_fraction": 0.0015190972222222222,
+        "picked": [
+          9087
+        ],
+        "seconds": 107.27235866105184
+      },
+      {
+        "index": 82,
+        "n_evaluations": 118,
+        "max_straddle": 0.9887798239092813,
+        "ambiguous_fraction": 0.1457248263888889,
+        "flip_fraction": 0.0009765625,
+        "picked": [
+          942
+        ],
+        "seconds": 53.42816714406945
+      },
+      {
+        "index": 83,
+        "n_evaluations": 119,
+        "max_straddle": 1.0100461245773626,
+        "ambiguous_fraction": 0.15738932291666666,
+        "flip_fraction": 0.001953125,
+        "picked": [
+          962
+        ],
+        "seconds": 86.35290825599805
+      },
+      {
+        "index": 84,
+        "n_evaluations": 120,
+        "max_straddle": 0.8278312003839119,
+        "ambiguous_fraction": 0.158203125,
+        "flip_fraction": 0.0028211805555555555,
+        "picked": [
+          888
+        ],
+        "seconds": 50.779778009979054
+      },
+      {
+        "index": 85,
+        "n_evaluations": 121,
+        "max_straddle": 0.846880128837756,
+        "ambiguous_fraction": 0.1621636284722222,
+        "flip_fraction": 0.0005967881944444445,
+        "picked": [
+          7762
+        ],
+        "seconds": 60.445983147015795
+      },
+      {
+        "index": 86,
+        "n_evaluations": 122,
+        "max_straddle": 0.8137962316560469,
+        "ambiguous_fraction": 0.15266927083333334,
+        "flip_fraction": 0.0009223090277777778,
+        "picked": [
+          1206
+        ],
+        "seconds": 106.97664103307761
+      },
+      {
+        "index": 87,
+        "n_evaluations": 123,
+        "max_straddle": 0.7684451693471435,
+        "ambiguous_fraction": 0.1457790798611111,
+        "flip_fraction": 0.0016276041666666667,
+        "picked": [
+          6908
+        ],
+        "seconds": 98.85663040704094
+      },
+      {
+        "index": 88,
+        "n_evaluations": 124,
+        "max_straddle": 0.743890963430017,
+        "ambiguous_fraction": 0.13623046875,
+        "flip_fraction": 0.00037977430555555556,
+        "picked": [
+          250
+        ],
+        "seconds": 93.92216258007102
+      },
+      {
+        "index": 89,
+        "n_evaluations": 125,
+        "max_straddle": 0.7703739990780196,
+        "ambiguous_fraction": 0.12098524305555555,
+        "flip_fraction": 0.0011393229166666667,
+        "picked": [
+          6662
+        ],
+        "seconds": 169.2339573749341
+      },
+      {
+        "index": 90,
+        "n_evaluations": 126,
+        "max_straddle": 0.7744825158685442,
+        "ambiguous_fraction": 0.1301540798611111,
+        "flip_fraction": 0.0007595486111111111,
+        "picked": [
+          6179
+        ],
+        "seconds": 130.0193266319111
+      },
+      {
+        "index": 91,
+        "n_evaluations": 127,
+        "max_straddle": 0.7617523832737036,
+        "ambiguous_fraction": 0.1184353298611111,
+        "flip_fraction": 0.0003255208333333333,
+        "picked": [
+          6228
+        ],
+        "seconds": 147.45380914094858
+      },
+      {
+        "index": 92,
+        "n_evaluations": 128,
+        "max_straddle": 0.7190855639205478,
+        "ambiguous_fraction": 0.11865234375,
+        "flip_fraction": 0.00043402777777777775,
+        "picked": [
+          7812
+        ],
+        "seconds": 60.559871352044865
+      },
+      {
+        "index": 93,
+        "n_evaluations": 129,
+        "max_straddle": 0.6950158464781038,
+        "ambiguous_fraction": 0.10975477430555555,
+        "flip_fraction": 0.0005425347222222222,
+        "picked": [
+          177
+        ],
+        "seconds": 51.157279102830216
+      },
+      {
+        "index": 94,
+        "n_evaluations": 130,
+        "max_straddle": 1.4795815215971782,
+        "ambiguous_fraction": 0.17664930555555555,
+        "flip_fraction": 0.019748263888888888,
+        "picked": [
+          2491
+        ],
+        "seconds": 55.61220702691935
+      },
+      {
+        "index": 95,
+        "n_evaluations": 131,
+        "max_straddle": 1.2984290484643382,
+        "ambiguous_fraction": 0.17317708333333334,
+        "flip_fraction": 0.006781684027777778,
+        "picked": [
+          2953
+        ],
+        "seconds": 49.84764595795423
+      },
+      {
+        "index": 96,
+        "n_evaluations": 132,
+        "max_straddle": 1.1861195992914528,
+        "ambiguous_fraction": 0.16786024305555555,
+        "flip_fraction": 0.0008680555555555555,
+        "picked": [
+          3334
+        ],
+        "seconds": 138.7386753319297
+      },
+      {
+        "index": 97,
+        "n_evaluations": 133,
+        "max_straddle": 1.0676159339792397,
+        "ambiguous_fraction": 0.158203125,
+        "flip_fraction": 0.0010850694444444445,
+        "picked": [
+          3898
+        ],
+        "seconds": 141.96294645615853
+      },
+      {
+        "index": 98,
+        "n_evaluations": 134,
+        "max_straddle": 1.0592453781154585,
+        "ambiguous_fraction": 0.13340928819444445,
+        "flip_fraction": 0.0017903645833333333,
+        "picked": [
+          3233
+        ],
+        "seconds": 98.89827329199761
+      },
+      {
+        "index": 99,
+        "n_evaluations": 135,
+        "max_straddle": 0.9116902806854774,
+        "ambiguous_fraction": 0.1315646701388889,
+        "flip_fraction": 0.0037977430555555555,
+        "picked": [
+          3192
+        ],
+        "seconds": 58.736748880008236
+      },
+      {
+        "index": 100,
+        "n_evaluations": 136,
+        "max_straddle": 1.0554779550898852,
+        "ambiguous_fraction": 0.13075086805555555,
+        "flip_fraction": 0.008680555555555556,
+        "picked": [
+          6158
+        ],
+        "seconds": 153.4974785221275
+      },
+      {
+        "index": 101,
+        "n_evaluations": 137,
+        "max_straddle": 0.8623793895398792,
+        "ambiguous_fraction": 0.12337239583333333,
+        "flip_fraction": 0.00016276041666666666,
+        "picked": [
+          1143
+        ],
+        "seconds": 48.06892047007568
+      },
+      {
+        "index": 102,
+        "n_evaluations": 138,
+        "max_straddle": 0.9362770543013458,
+        "ambiguous_fraction": 0.162109375,
+        "flip_fraction": 0.0030381944444444445,
+        "picked": [
+          5689
+        ],
+        "seconds": 53.96968607092276
+      },
+      {
+        "index": 103,
+        "n_evaluations": 139,
+        "max_straddle": 0.786233780913941,
+        "ambiguous_fraction": 0.1440972222222222,
+        "flip_fraction": 0.005533854166666667,
+        "picked": [
+          3609
+        ],
+        "seconds": 73.40514834807254
+      },
+      {
+        "index": 104,
+        "n_evaluations": 140,
+        "max_straddle": 0.7620903817924076,
+        "ambiguous_fraction": 0.1401909722222222,
+        "flip_fraction": 0.00016276041666666666,
+        "picked": [
+          3641
+        ],
+        "seconds": 49.65535880601965
+      },
+      {
+        "index": 105,
+        "n_evaluations": 141,
+        "max_straddle": 2.597557664229194,
+        "ambiguous_fraction": 0.4714084201388889,
+        "flip_fraction": 0.025010850694444444,
+        "picked": [
+          3040
+        ],
+        "seconds": 98.52350969612598
+      },
+      {
+        "index": 106,
+        "n_evaluations": 142,
+        "max_straddle": 0.7913694944425818,
+        "ambiguous_fraction": 0.1387261284722222,
+        "flip_fraction": 0.024739583333333332,
+        "picked": [
+          3676
+        ],
+        "seconds": 80.0466690310277
+      },
+      {
+        "index": 107,
+        "n_evaluations": 143,
+        "max_straddle": 0.9822524154228749,
+        "ambiguous_fraction": 0.13037109375,
+        "flip_fraction": 0.0007595486111111111,
+        "picked": [
+          4444
+        ],
+        "seconds": 166.33774842577986
+      },
+      {
+        "index": 108,
+        "n_evaluations": 144,
+        "max_straddle": 0.7348181913661844,
+        "ambiguous_fraction": 0.11881510416666667,
+        "flip_fraction": 5.425347222222222e-05,
+        "picked": [
+          3110
+        ],
+        "seconds": 99.32766386820003
+      },
+      {
+        "index": 109,
+        "n_evaluations": 145,
+        "max_straddle": 0.713321674193309,
+        "ambiguous_fraction": 0.10975477430555555,
+        "flip_fraction": 0.0008138020833333334,
+        "picked": [
+          6820
+        ],
+        "seconds": 149.13072524499148
+      },
+      {
+        "index": 110,
+        "n_evaluations": 146,
+        "max_straddle": 0.7001864383858024,
+        "ambiguous_fraction": 0.1047634548611111,
+        "flip_fraction": 0.0002712673611111111,
+        "picked": [
+          6089
+        ],
+        "seconds": 94.18638437311165
+      },
+      {
+        "index": 111,
+        "n_evaluations": 147,
+        "max_straddle": 1.138713675206527,
+        "ambiguous_fraction": 0.1444769965277778,
+        "flip_fraction": 0.005208333333333333,
+        "picked": [
+          2051
+        ],
+        "seconds": 136.32671769708395
+      },
+      {
+        "index": 112,
+        "n_evaluations": 148,
+        "max_straddle": 0.7732519505686477,
+        "ambiguous_fraction": 0.1328667534722222,
+        "flip_fraction": 0.0005967881944444445,
+        "picked": [
+          1859
+        ],
+        "seconds": 91.364366552094
+      },
+      {
+        "index": 113,
+        "n_evaluations": 149,
+        "max_straddle": 0.7475040298195854,
+        "ambiguous_fraction": 0.1240234375,
+        "flip_fraction": 0.00016276041666666666,
+        "picked": [
+          5430
+        ],
+        "seconds": 104.73417564691044
+      },
+      {
+        "index": 114,
+        "n_evaluations": 150,
+        "max_straddle": 0.7213934414657808,
+        "ambiguous_fraction": 0.09016927083333333,
+        "flip_fraction": 0.004937065972222222,
+        "picked": [
+          6113
+        ],
+        "seconds": 56.35269886883907
+      },
+      {
+        "index": 115,
+        "n_evaluations": 151,
+        "max_straddle": 1.2614816729149527,
+        "ambiguous_fraction": 0.2734375,
+        "flip_fraction": 0.008897569444444444,
+        "picked": [
+          1377
+        ],
+        "seconds": 85.68824122101068
+      },
+      {
+        "index": 116,
+        "n_evaluations": 152,
+        "max_straddle": 1.2228593894923767,
+        "ambiguous_fraction": 0.2601453993055556,
+        "flip_fraction": 0.002170138888888889,
+        "picked": [
+          5404
+        ],
+        "seconds": 106.24738843599334
+      },
+      {
+        "index": 117,
+        "n_evaluations": 153,
+        "max_straddle": 1.2059918804402106,
+        "ambiguous_fraction": 0.2432183159722222,
+        "flip_fraction": 0.00016276041666666666,
+        "picked": [
+          4269
+        ],
+        "seconds": 90.1600045140367
+      },
+      {
+        "index": 118,
+        "n_evaluations": 154,
+        "max_straddle": 1.181537920409704,
+        "ambiguous_fraction": 0.23204210069444445,
+        "flip_fraction": 0.00016276041666666666,
+        "picked": [
+          6732
+        ],
+        "seconds": 127.919186654035
+      },
+      {
+        "index": 119,
+        "n_evaluations": 155,
+        "max_straddle": 0.9570002853251343,
+        "ambiguous_fraction": 0.22102864583333334,
+        "flip_fraction": 0.00021701388888888888,
+        "picked": [
+          5465
+        ],
+        "seconds": 99.43080168077722
+      },
+      {
+        "index": 120,
+        "n_evaluations": 156,
+        "max_straddle": 0.9627896554575759,
+        "ambiguous_fraction": 0.2099066840277778,
+        "flip_fraction": 0.0008138020833333334,
+        "picked": [
+          6137
+        ],
+        "seconds": 54.8376271140296
+      },
+      {
+        "index": 121,
+        "n_evaluations": 157,
+        "max_straddle": 1.3724080020541176,
+        "ambiguous_fraction": 0.18858506944444445,
+        "flip_fraction": 0.005533854166666667,
+        "picked": [
+          4149
+        ],
+        "seconds": 74.97167046112008
+      },
+      {
+        "index": 122,
+        "n_evaluations": 158,
+        "max_straddle": 1.1692579002120125,
+        "ambiguous_fraction": 0.20003255208333334,
+        "flip_fraction": 0.004503038194444444,
+        "picked": [
+          2081
+        ],
+        "seconds": 67.77185005811043
+      },
+      {
+        "index": 123,
+        "n_evaluations": 159,
+        "max_straddle": 1.1395384363679737,
+        "ambiguous_fraction": 0.21327039930555555,
+        "flip_fraction": 0.0009223090277777778,
+        "picked": [
+          6172
+        ],
+        "seconds": 138.32665248494595
+      },
+      {
+        "index": 124,
+        "n_evaluations": 160,
+        "max_straddle": 1.0206651408086178,
+        "ambiguous_fraction": 0.20350477430555555,
+        "flip_fraction": 0.00021701388888888888,
+        "picked": [
+          6656
+        ],
+        "seconds": 114.02878843899816
+      },
+      {
+        "index": 125,
+        "n_evaluations": 161,
+        "max_straddle": 0.8645631310772768,
+        "ambiguous_fraction": 0.19466145833333334,
+        "flip_fraction": 5.425347222222222e-05,
+        "picked": [
+          6008
+        ],
+        "seconds": 37.396296969847754
+      },
+      {
+        "index": 126,
+        "n_evaluations": 162,
+        "max_straddle": 1.172145497120464,
+        "ambiguous_fraction": 0.1169162326388889,
+        "flip_fraction": 0.0185546875,
+        "picked": [
+          4515
+        ],
+        "seconds": 64.99473115592264
+      },
+      {
+        "index": 127,
+        "n_evaluations": 163,
+        "max_straddle": 1.1431292689848092,
+        "ambiguous_fraction": 0.11414930555555555,
+        "flip_fraction": 0.0008680555555555555,
+        "picked": [
+          5949
+        ],
+        "seconds": 61.74484164896421
+      },
+      {
+        "index": 128,
+        "n_evaluations": 164,
+        "max_straddle": 1.260088585927577,
+        "ambiguous_fraction": 0.13118489583333334,
+        "flip_fraction": 0.009385850694444444,
+        "picked": [
+          3766
+        ],
+        "seconds": 104.98201424605213
+      },
+      {
+        "index": 129,
+        "n_evaluations": 165,
+        "max_straddle": 1.2078798500090446,
+        "ambiguous_fraction": 0.12972005208333334,
+        "flip_fraction": 0.00021701388888888888,
+        "picked": [
+          3276
+        ],
+        "seconds": 99.73868588195182
+      },
+      {
+        "index": 130,
+        "n_evaluations": 166,
+        "max_straddle": 1.3851552411775736,
+        "ambiguous_fraction": 0.1786566840277778,
+        "flip_fraction": 0.009114583333333334,
+        "picked": [
+          6243
+        ],
+        "seconds": 119.38950418890454
+      },
+      {
+        "index": 131,
+        "n_evaluations": 167,
+        "max_straddle": 1.2475390695360948,
+        "ambiguous_fraction": 0.1652560763888889,
+        "flip_fraction": 0.00341796875,
+        "picked": [
+          4507
+        ],
+        "seconds": 96.5869026160799
+      },
+      {
+        "index": 132,
+        "n_evaluations": 168,
+        "max_straddle": 1.1608400865723292,
+        "ambiguous_fraction": 0.14192708333333334,
+        "flip_fraction": 0.005642361111111111,
+        "picked": [
+          4543
+        ],
+        "seconds": 77.52782316878438
+      },
+      {
+        "index": 133,
+        "n_evaluations": 169,
+        "max_straddle": 1.0640164039846798,
+        "ambiguous_fraction": 0.14420572916666666,
+        "flip_fraction": 0.001193576388888889,
+        "picked": [
+          1522
+        ],
+        "seconds": 103.49836724787019
+      },
+      {
+        "index": 134,
+        "n_evaluations": 170,
+        "max_straddle": 1.068368886260247,
+        "ambiguous_fraction": 0.1335177951388889,
+        "flip_fraction": 0.007595486111111111,
+        "picked": [
+          3145
+        ],
+        "seconds": 100.62263187812641
+      },
+      {
+        "index": 135,
+        "n_evaluations": 171,
+        "max_straddle": 1.019672854514419,
+        "ambiguous_fraction": 0.13199869791666666,
+        "flip_fraction": 0.002224392361111111,
+        "picked": [
+          5468
+        ],
+        "seconds": 88.62571693304926
+      },
+      {
+        "index": 136,
+        "n_evaluations": 172,
+        "max_straddle": 1.068405690222697,
+        "ambiguous_fraction": 0.12776692708333334,
+        "flip_fraction": 0.004069010416666667,
+        "picked": [
+          3027
+        ],
+        "seconds": 61.3811555209104
+      },
+      {
+        "index": 137,
+        "n_evaluations": 173,
+        "max_straddle": 0.8711913066640935,
+        "ambiguous_fraction": 0.1232638888888889,
+        "flip_fraction": 0.013617621527777778,
+        "picked": [
+          6204
+        ],
+        "seconds": 146.73733107815497
+      },
+      {
+        "index": 138,
+        "n_evaluations": 174,
+        "max_straddle": 0.7810139745745623,
+        "ambiguous_fraction": 0.11344401041666667,
+        "flip_fraction": 0.00021701388888888888,
+        "picked": [
+          6776
+        ],
+        "seconds": 118.21438572090119
+      },
+      {
+        "index": 139,
+        "n_evaluations": 175,
+        "max_straddle": 0.6849141466580441,
+        "ambiguous_fraction": 0.1042751736111111,
+        "flip_fraction": 0.0003255208333333333,
+        "picked": [
+          3337
+        ],
+        "seconds": 58.03013930213638
+      },
+      {
+        "index": 140,
+        "n_evaluations": 176,
+        "max_straddle": 0.6775941899735995,
+        "ambiguous_fraction": 0.09977213541666667,
+        "flip_fraction": 0.0013020833333333333,
+        "picked": [
+          5372
+        ],
+        "seconds": 70.42921905498952
+      },
+      {
+        "index": 141,
+        "n_evaluations": 177,
+        "max_straddle": 0.6568820980273767,
+        "ambiguous_fraction": 0.09966362847222222,
+        "flip_fraction": 0.00021701388888888888,
+        "picked": [
+          5806
+        ],
+        "seconds": 73.72917544399388
+      },
+      {
+        "index": 142,
+        "n_evaluations": 178,
+        "max_straddle": 0.6608817602324771,
+        "ambiguous_fraction": 0.09711371527777778,
+        "flip_fraction": 0.0009223090277777778,
+        "picked": [
+          3558
+        ],
+        "seconds": 97.1783227159176
+      },
+      {
+        "index": 143,
+        "n_evaluations": 179,
+        "max_straddle": 0.7345422323301195,
+        "ambiguous_fraction": 0.1062282986111111,
+        "flip_fraction": 0.003363715277777778,
+        "picked": [
+          5865
+        ],
+        "seconds": 89.62335463915952
+      },
+      {
+        "index": 144,
+        "n_evaluations": 180,
+        "max_straddle": 0.6707770779498193,
+        "ambiguous_fraction": 0.10286458333333333,
+        "flip_fraction": 0.0016276041666666667,
+        "picked": [
+          934
+        ],
+        "seconds": 98.69072894798592
+      },
+      {
+        "index": 145,
+        "n_evaluations": 181,
+        "max_straddle": 0.6368610203070004,
+        "ambiguous_fraction": 0.09814453125,
+        "flip_fraction": 0.00021701388888888888,
+        "picked": [
+          726
+        ],
+        "seconds": 100.1832513930276
+      },
+      {
+        "index": 146,
+        "n_evaluations": 182,
+        "max_straddle": 0.5534173233277931,
+        "ambiguous_fraction": 0.09288194444444445,
+        "flip_fraction": 0.0014105902777777778,
+        "picked": [
+          8150
+        ],
+        "seconds": 110.98128963098861
+      },
+      {
+        "index": 147,
+        "n_evaluations": 183,
+        "max_straddle": 0.5760408726640536,
+        "ambiguous_fraction": 0.0920138888888889,
+        "flip_fraction": 0.002387152777777778,
+        "picked": [
+          2825
+        ],
+        "seconds": 52.51854930189438
+      },
+      {
+        "index": 148,
+        "n_evaluations": 184,
+        "max_straddle": 0.6369666328146343,
+        "ambiguous_fraction": 0.09125434027777778,
+        "flip_fraction": 0.001247829861111111,
+        "picked": [
+          4909
+        ],
+        "seconds": 52.19481161609292
+      },
+      {
+        "index": 149,
+        "n_evaluations": 185,
+        "max_straddle": 0.7585878115956814,
+        "ambiguous_fraction": 0.09619140625,
+        "flip_fraction": 0.004557291666666667,
+        "picked": [
+          4476
+        ],
+        "seconds": 130.69610886112787
+      },
+      {
+        "index": 150,
+        "n_evaluations": 186,
+        "max_straddle": 0.7426680397122101,
+        "ambiguous_fraction": 0.08745659722222222,
+        "flip_fraction": 0.00043402777777777775,
+        "picked": [
+          3250
+        ],
+        "seconds": 102.61481517110951
+      },
+      {
+        "index": 151,
+        "n_evaluations": 187,
+        "max_straddle": 0.7708654437652438,
+        "ambiguous_fraction": 0.0905490451388889,
+        "flip_fraction": 0.00390625,
+        "picked": [
+          2401
+        ],
+        "seconds": 102.60442038089968
+      },
+      {
+        "index": 152,
+        "n_evaluations": 188,
+        "max_straddle": 0.6064483753013539,
+        "ambiguous_fraction": 0.0837131076388889,
+        "flip_fraction": 0.0005425347222222222,
+        "picked": [
+          3229
+        ],
+        "seconds": 75.62663143500686
+      },
+      {
+        "index": 153,
+        "n_evaluations": 189,
+        "max_straddle": 0.5984836535332108,
+        "ambiguous_fraction": 0.08116319444444445,
+        "flip_fraction": 0.0006510416666666666,
+        "picked": [
+          6778
+        ],
+        "seconds": 130.5758828201797
+      },
+      {
+        "index": 154,
+        "n_evaluations": 190,
+        "max_straddle": 0.5630031075760876,
+        "ambiguous_fraction": 0.06792534722222222,
+        "flip_fraction": 0.00037977430555555556,
+        "picked": [
+          4773
+        ],
+        "seconds": 60.00424186489545
+      },
+      {
+        "index": 155,
+        "n_evaluations": 191,
+        "max_straddle": 0.8371590358163771,
+        "ambiguous_fraction": 0.07291666666666667,
+        "flip_fraction": 0.0028211805555555555,
+        "picked": [
+          6589
+        ],
+        "seconds": 81.00441825180314
+      },
+      {
+        "index": 156,
+        "n_evaluations": 192,
+        "max_straddle": 0.7024994537026229,
+        "ambiguous_fraction": 0.09901258680555555,
+        "flip_fraction": 0.00439453125,
+        "picked": [
+          3801
+        ],
+        "seconds": 77.8365264129825
+      },
+      {
+        "index": 157,
+        "n_evaluations": 193,
+        "max_straddle": 0.6922491127573979,
+        "ambiguous_fraction": 0.0920681423611111,
+        "flip_fraction": 0.0037977430555555555,
+        "picked": [
+          825
+        ],
+        "seconds": 80.33636109810323
+      },
+      {
+        "index": 158,
+        "n_evaluations": 194,
+        "max_straddle": 0.6195306550000823,
+        "ambiguous_fraction": 0.0906032986111111,
+        "flip_fraction": 0.0006510416666666666,
+        "picked": [
+          5878
+        ],
+        "seconds": 103.67474446212873
+      },
+      {
+        "index": 159,
+        "n_evaluations": 195,
+        "max_straddle": 0.7276175532541689,
+        "ambiguous_fraction": 0.10991753472222222,
+        "flip_fraction": 0.0030924479166666665,
+        "picked": [
+          1915
+        ],
+        "seconds": 76.6023433599621
+      },
+      {
+        "index": 160,
+        "n_evaluations": 196,
+        "max_straddle": 0.5430274519161673,
+        "ambiguous_fraction": 0.1032443576388889,
+        "flip_fraction": 0.0,
+        "picked": [
+          1289
+        ],
+        "seconds": 51.95455164904706
+      },
+      {
+        "index": 161,
+        "n_evaluations": 197,
+        "max_straddle": 0.6476671947391365,
+        "ambiguous_fraction": 0.08409288194444445,
+        "flip_fraction": 0.0026041666666666665,
+        "picked": [
+          1526
+        ],
+        "seconds": 81.08559041796252
+      },
+      {
+        "index": 162,
+        "n_evaluations": 198,
+        "max_straddle": 0.5544277934649118,
+        "ambiguous_fraction": 0.08100043402777778,
+        "flip_fraction": 0.00043402777777777775,
+        "picked": [
+          3382
+        ],
+        "seconds": 94.17468008911237
+      },
+      {
+        "index": 163,
+        "n_evaluations": 199,
+        "max_straddle": 0.5704978831942777,
+        "ambiguous_fraction": 0.083984375,
+        "flip_fraction": 0.0016276041666666667,
+        "picked": [
+          4653
+        ],
+        "seconds": 56.284734004875645
+      },
+      {
+        "index": 164,
+        "n_evaluations": 200,
+        "max_straddle": 0.7765430202798634,
+        "ambiguous_fraction": 0.15511067708333334,
+        "flip_fraction": 0.002875434027777778,
+        "picked": [
+          785
+        ],
+        "seconds": 91.76059857103974
+      },
+      {
+        "index": 165,
+        "n_evaluations": 201,
+        "max_straddle": 0.7314951621785974,
+        "ambiguous_fraction": 0.15283203125,
+        "flip_fraction": 0.0007052951388888889,
+        "picked": [
+          768
+        ],
+        "seconds": 93.8362452830188
+      },
+      {
+        "index": 166,
+        "n_evaluations": 202,
+        "max_straddle": 0.6246418736656585,
+        "ambiguous_fraction": 0.1447482638888889,
+        "flip_fraction": 0.00021701388888888888,
+        "picked": [
+          5507
+        ],
+        "seconds": 88.27873322600499
+      },
+      {
+        "index": 167,
+        "n_evaluations": 203,
+        "max_straddle": 0.6376827744283811,
+        "ambiguous_fraction": 0.1330837673611111,
+        "flip_fraction": 0.0005425347222222222,
+        "picked": [
+          837
+        ],
+        "seconds": 86.51148624182679
+      },
+      {
+        "index": 168,
+        "n_evaluations": 204,
+        "max_straddle": 0.6535837331081322,
+        "ambiguous_fraction": 0.13221571180555555,
+        "flip_fraction": 0.0010850694444444445,
+        "picked": [
+          809
+        ],
+        "seconds": 100.82983118807897
+      },
+      {
+        "index": 169,
+        "n_evaluations": 205,
+        "max_straddle": 0.7279861237823829,
+        "ambiguous_fraction": 0.12320963541666667,
+        "flip_fraction": 0.002007378472222222,
+        "picked": [
+          5677
+        ],
+        "seconds": 48.06267025996931
+      },
+      {
+        "index": 170,
+        "n_evaluations": 206,
+        "max_straddle": 0.739762304136356,
+        "ambiguous_fraction": 0.1145290798611111,
+        "flip_fraction": 0.004503038194444444,
+        "picked": [
+          6025
+        ],
+        "seconds": 59.30386249301955
+      },
+      {
+        "index": 171,
+        "n_evaluations": 207,
+        "max_straddle": 0.6581776829994079,
+        "ambiguous_fraction": 0.1189236111111111,
+        "flip_fraction": 0.0013020833333333333,
+        "picked": [
+          6335
+        ],
+        "seconds": 127.94457026082091
+      },
+      {
+        "index": 172,
+        "n_evaluations": 208,
+        "max_straddle": 0.6509697418132088,
+        "ambiguous_fraction": 0.11046006944444445,
+        "flip_fraction": 0.00010850694444444444,
+        "picked": [
+          5609
+        ],
+        "seconds": 100.30124719813466
+      },
+      {
+        "index": 173,
+        "n_evaluations": 209,
+        "max_straddle": 0.6434266081249194,
+        "ambiguous_fraction": 0.1083984375,
+        "flip_fraction": 0.0002712673611111111,
+        "picked": [
+          3891
+        ],
+        "seconds": 73.76369246793911
+      },
+      {
+        "index": 174,
+        "n_evaluations": 210,
+        "max_straddle": 0.6193983563300294,
+        "ambiguous_fraction": 0.10611979166666667,
+        "flip_fraction": 0.0002712673611111111,
+        "picked": [
+          4761
+        ],
+        "seconds": 58.55567572591826
+      },
+      {
+        "index": 175,
+        "n_evaluations": 211,
+        "max_straddle": 0.856221593204772,
+        "ambiguous_fraction": 0.09608289930555555,
+        "flip_fraction": 0.006456163194444444,
+        "picked": [
+          6006
+        ],
+        "seconds": 87.55255363602191
+      },
+      {
+        "index": 176,
+        "n_evaluations": 212,
+        "max_straddle": 0.8168037704239324,
+        "ambiguous_fraction": 0.0986328125,
+        "flip_fraction": 0.00043402777777777775,
+        "picked": [
+          5481
+        ],
+        "seconds": 72.39707166515291
+      },
+      {
+        "index": 177,
+        "n_evaluations": 213,
+        "max_straddle": 0.7886922789720895,
+        "ambiguous_fraction": 0.09716796875,
+        "flip_fraction": 0.0008138020833333334,
+        "picked": [
+          4743
+        ],
+        "seconds": 61.879165197955444
+      },
+      {
+        "index": 178,
+        "n_evaluations": 214,
+        "max_straddle": 0.8607320132507352,
+        "ambiguous_fraction": 0.1047634548611111,
+        "flip_fraction": 0.0005967881944444445,
+        "picked": [
+          4457
+        ],
+        "seconds": 54.2852103181649
+      },
+      {
+        "index": 179,
+        "n_evaluations": 215,
+        "max_straddle": 0.8425408092696536,
+        "ambiguous_fraction": 0.10313585069444445,
+        "flip_fraction": 0.0005425347222222222,
+        "picked": [
+          5297
+        ],
+        "seconds": 57.12235290906392
+      },
+      {
+        "index": 180,
+        "n_evaluations": 216,
+        "max_straddle": 0.9800027679053991,
+        "ambiguous_fraction": 0.10660807291666667,
+        "flip_fraction": 0.00146484375,
+        "picked": [
+          4969
+        ],
+        "seconds": 56.5820049259346
+      },
+      {
+        "index": 181,
+        "n_evaluations": 217,
+        "max_straddle": 0.9423822438363174,
+        "ambiguous_fraction": 0.13883463541666666,
+        "flip_fraction": 0.002658420138888889,
+        "picked": [
+          6583
+        ],
+        "seconds": 108.7842683820054
+      },
+      {
+        "index": 182,
+        "n_evaluations": 218,
+        "max_straddle": 0.9241973237729618,
+        "ambiguous_fraction": 0.13981119791666666,
+        "flip_fraction": 0.0030924479166666665,
+        "picked": [
+          5961
+        ],
+        "seconds": 83.17077029217035
+      },
+      {
+        "index": 183,
+        "n_evaluations": 219,
+        "max_straddle": 0.9032455109494498,
+        "ambiguous_fraction": 0.1366644965277778,
+        "flip_fraction": 0.00010850694444444444,
+        "picked": [
+          5814
+        ],
+        "seconds": 116.39004801912233
+      },
+      {
+        "index": 184,
+        "n_evaluations": 220,
+        "max_straddle": 0.8762091128752892,
+        "ambiguous_fraction": 0.1323784722222222,
+        "flip_fraction": 0.00037977430555555556,
+        "picked": [
+          5550
+        ],
+        "seconds": 64.18984056916088
+      },
+      {
+        "index": 185,
+        "n_evaluations": 221,
+        "max_straddle": 0.7443566759834859,
+        "ambiguous_fraction": 0.1308051215277778,
+        "flip_fraction": 0.0005967881944444445,
+        "picked": [
+          4908
+        ],
+        "seconds": 103.93160551087931
+      },
+      {
+        "index": 186,
+        "n_evaluations": 222,
+        "max_straddle": 0.7299105345757795,
+        "ambiguous_fraction": 0.1259223090277778,
+        "flip_fraction": 5.425347222222222e-05,
+        "picked": [
+          897
+        ],
+        "seconds": 99.92178455204703
+      },
+      {
+        "index": 187,
+        "n_evaluations": 223,
+        "max_straddle": 0.7993292461808263,
+        "ambiguous_fraction": 0.13487413194444445,
+        "flip_fraction": 0.001736111111111111,
+        "picked": [
+          5769
+        ],
+        "seconds": 74.16229543811642
+      },
+      {
+        "index": 188,
+        "n_evaluations": 224,
+        "max_straddle": 0.7535662676085095,
+        "ambiguous_fraction": 0.1328667534722222,
+        "flip_fraction": 0.0007052951388888889,
+        "picked": [
+          5533
+        ],
+        "seconds": 91.34584587696008
+      },
+      {
+        "index": 189,
+        "n_evaluations": 225,
+        "max_straddle": 0.694942835811549,
+        "ambiguous_fraction": 0.1298285590277778,
+        "flip_fraction": 0.00048828125,
+        "picked": [
+          6211
+        ],
+        "seconds": 142.90496732201427
+      },
+      {
+        "index": 190,
+        "n_evaluations": 226,
+        "max_straddle": 0.678371271886458,
+        "ambiguous_fraction": 0.12456597222222222,
+        "flip_fraction": 0.0003255208333333333,
+        "picked": [
+          5421
+        ],
+        "seconds": 59.64647776004858
+      },
+      {
+        "index": 191,
+        "n_evaluations": 227,
+        "max_straddle": 0.6697368670633237,
+        "ambiguous_fraction": 0.12396918402777778,
+        "flip_fraction": 0.0007052951388888889,
+        "picked": [
+          6435
+        ],
+        "seconds": 84.23484874796122
+      },
+      {
+        "index": 192,
+        "n_evaluations": 228,
+        "max_straddle": 0.6231208209533838,
+        "ambiguous_fraction": 0.11930338541666667,
+        "flip_fraction": 0.00010850694444444444,
+        "picked": [
+          3882
+        ],
+        "seconds": 153.11866420297883
+      },
+      {
+        "index": 193,
+        "n_evaluations": 229,
+        "max_straddle": 0.6168428374818903,
+        "ambiguous_fraction": 0.10899522569444445,
+        "flip_fraction": 0.0,
+        "picked": [
+          5239
+        ],
+        "seconds": 52.78409670596011
+      },
+      {
+        "index": 194,
+        "n_evaluations": 230,
+        "max_straddle": 0.9297069555675681,
+        "ambiguous_fraction": 0.16080729166666666,
+        "flip_fraction": 0.00537109375,
+        "picked": [
+          4171
+        ],
+        "seconds": 88.52711790287867
+      },
+      {
+        "index": 195,
+        "n_evaluations": 231,
+        "max_straddle": 0.9807791187841772,
+        "ambiguous_fraction": 0.18446180555555555,
+        "flip_fraction": 0.001681857638888889,
+        "picked": [
+          5528
+        ],
+        "seconds": 113.94437692686915
+      },
+      {
+        "index": 196,
+        "n_evaluations": 232,
+        "max_straddle": 0.8522877308592114,
+        "ambiguous_fraction": 0.15538194444444445,
+        "flip_fraction": 0.0016276041666666667,
+        "picked": [
+          2307
+        ],
+        "seconds": 110.60758952703327
+      },
+      {
+        "index": 197,
+        "n_evaluations": 233,
+        "max_straddle": 0.8144375193074538,
+        "ambiguous_fraction": 0.14827473958333334,
+        "flip_fraction": 0.00016276041666666666,
+        "picked": [
+          6730
+        ],
+        "seconds": 151.23259413498454
+      },
+      {
+        "index": 198,
+        "n_evaluations": 234,
+        "max_straddle": 0.729846653558534,
+        "ambiguous_fraction": 0.14366319444444445,
+        "flip_fraction": 0.00048828125,
+        "picked": [
+          5983
+        ],
+        "seconds": 62.2664268319495
+      },
+      {
+        "index": 199,
+        "n_evaluations": 235,
+        "max_straddle": 2.0950881280006737,
+        "ambiguous_fraction": 0.3692491319444444,
+        "flip_fraction": 0.023708767361111112,
+        "picked": [
+          915
+        ],
+        "seconds": 105.67752959905192
+      },
+      {
+        "index": 200,
+        "n_evaluations": 236,
+        "max_straddle": 0.7208102444189892,
+        "ambiguous_fraction": 0.12017144097222222,
+        "flip_fraction": 0.021918402777777776,
+        "picked": [
+          2605
+        ],
+        "seconds": 54.17655283701606
+      },
+      {
+        "index": 201,
+        "n_evaluations": 237,
+        "max_straddle": 0.7083605165004198,
+        "ambiguous_fraction": 0.14317491319444445,
+        "flip_fraction": 0.004557291666666667,
+        "picked": [
+          3222
+        ],
+        "seconds": 103.7292001331225
+      },
+      {
+        "index": 202,
+        "n_evaluations": 238,
+        "max_straddle": 0.6744581457396964,
+        "ambiguous_fraction": 0.1362847222222222,
+        "flip_fraction": 0.0010308159722222222,
+        "picked": [
+          3785
+        ],
+        "seconds": 103.59697275888175
+      },
+      {
+        "index": 203,
+        "n_evaluations": 239,
+        "max_straddle": 0.6982409222102764,
+        "ambiguous_fraction": 0.138671875,
+        "flip_fraction": 0.00048828125,
+        "picked": [
+          5577
+        ],
+        "seconds": 68.68748363200575
+      },
+      {
+        "index": 204,
+        "n_evaluations": 240,
+        "max_straddle": 0.7305079588911993,
+        "ambiguous_fraction": 0.1787651909722222,
+        "flip_fraction": 0.0017903645833333333,
+        "picked": [
+          6796
+        ],
+        "seconds": 136.19902509218082
+      },
+      {
+        "index": 205,
+        "n_evaluations": 241,
+        "max_straddle": 0.6764666746259621,
+        "ambiguous_fraction": 0.17366536458333334,
+        "flip_fraction": 0.00021701388888888888,
+        "picked": [
+          902
+        ],
+        "seconds": 100.81154194287956
+      },
+      {
+        "index": 206,
+        "n_evaluations": 242,
+        "max_straddle": 0.6419988559662739,
+        "ambiguous_fraction": 0.16715494791666666,
+        "flip_fraction": 0.00043402777777777775,
+        "picked": [
+          3750
+        ],
+        "seconds": 85.87700255890377
+      },
+      {
+        "index": 207,
+        "n_evaluations": 243,
+        "max_straddle": 0.6246002377187398,
+        "ambiguous_fraction": 0.16227213541666666,
+        "flip_fraction": 0.0002712673611111111,
+        "picked": [
+          3417
+        ],
+        "seconds": 101.79985478613526
+      },
+      {
+        "index": 208,
+        "n_evaluations": 244,
+        "max_straddle": 0.6016933708095374,
+        "ambiguous_fraction": 0.15831163194444445,
+        "flip_fraction": 0.00021701388888888888,
+        "picked": [
+          3142
+        ],
+        "seconds": 111.41480836900882
+      },
+      {
+        "index": 209,
+        "n_evaluations": 245,
+        "max_straddle": 0.5937532889162978,
+        "ambiguous_fraction": 0.1528862847222222,
+        "flip_fraction": 0.0007052951388888889,
+        "picked": [
+          3798
+        ],
+        "seconds": 120.8332590048667
+      },
+      {
+        "index": 210,
+        "n_evaluations": 246,
+        "max_straddle": 0.5473696145901092,
+        "ambiguous_fraction": 0.14805772569444445,
+        "flip_fraction": 0.0002712673611111111,
+        "picked": [
+          6835
+        ],
+        "seconds": 114.61076009902172
+      },
+      {
+        "index": 211,
+        "n_evaluations": 247,
+        "max_straddle": 0.5298051647715154,
+        "ambiguous_fraction": 0.14322916666666666,
+        "flip_fraction": 0.0002712673611111111,
+        "picked": [
+          4502
+        ],
+        "seconds": 142.13737861206755
+      },
+      {
+        "index": 212,
+        "n_evaluations": 248,
+        "max_straddle": 0.5238064468159693,
+        "ambiguous_fraction": 0.1328125,
+        "flip_fraction": 0.0002712673611111111,
+        "picked": [
+          3761
+        ],
+        "seconds": 59.12563840299845
+      },
+      {
+        "index": 213,
+        "n_evaluations": 249,
+        "max_straddle": 0.505720460702221,
+        "ambiguous_fraction": 0.13330078125,
+        "flip_fraction": 0.0005425347222222222,
+        "picked": [
+          4108
+        ],
+        "seconds": 124.80653444910422
+      },
+      {
+        "index": 214,
+        "n_evaluations": 250,
+        "max_straddle": 1.484248405668417,
+        "ambiguous_fraction": 0.2991536458333333,
+        "flip_fraction": 0.018337673611111112,
+        "picked": [],
+        "seconds": 34.18278241017833
+      }
+    ],
+    "level_correlations": {
+      "pos_ci95": [
+        [
+          1.0,
+          0.986710770233208,
+          0.9739238425044412,
+          0.929621969062579
+        ],
+        [
+          0.986710770233208,
+          0.9999999999999999,
+          0.9737461733370549,
+          0.888047567424679
+        ],
+        [
+          0.9739238425044412,
+          0.9737461733370549,
+          0.9999999999999999,
+          0.9596288674790459
+        ],
+        [
+          0.929621969062579,
+          0.888047567424679,
+          0.9596288674790459,
+          0.9999999999999999
+        ]
+      ],
+      "vel_ci95": [
+        [
+          1.0,
+          0.6597450418525869,
+          -0.2691740336303499
+        ],
+        [
+          0.6597450418525869,
+          1.0,
+          0.3515338035182065
+        ],
+        [
+          -0.2691740336303499,
+          0.3515338035182065,
+          0.9999999999999998
+        ]
+      ],
+      "speed": [
+        [
+          1.0,
+          0.8498685366633559,
+          0.719799980095892
+        ],
+        [
+          0.8498685366633559,
+          1.0,
+          0.9711090733417652
+        ],
+        [
+          0.719799980095892,
+          0.9711090733417652,
+          1.0
+        ]
+      ]
+    }
+  }
+}

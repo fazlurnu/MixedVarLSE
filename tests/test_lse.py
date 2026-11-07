@@ -171,3 +171,35 @@ def test_stop_when_confident_false_runs_to_the_budget() -> None:
     assert full.n_evaluations == stopped.n_evaluations + 5
     assert full.stop_reason.startswith("budget")
     assert (full.w[: stopped.n_evaluations] == stopped.w).all()   # identical up to the stop
+
+
+def test_gotovos_acquisition_classifies_monotonically() -> None:
+    """Gotovos LSE: a classified candidate never reverts and is never sampled again."""
+    from mvlse import Continuous, DesignSpace
+
+    space = DesignSpace({"x": Continuous(0.0, 1.0)})
+    fn = lambda pts: [float(np.sin(6 * p["x"])) for p in pts]
+    res = run_lse(space, fn, threshold=0.2, acquisition="gotovos", max_evaluations=25,
+                  n_init_per_category=4, stop_when_confident=False, flip_tolerance=-1.0, verbose=False,
+                  seed=3, keep_snapshots=False)
+    assert res.labels is not None and res.labels.shape == (len(res.candidates),)
+    assert set(np.unique(res.labels)) <= {0, 1, 2}
+    # A sample is only ever taken from the unclassified pool, and each candidate at most once.
+    picked = [i for r in res.rounds for i in r.picked]
+    assert len(picked) == len(set(picked))
+    assert all(r.unclassified_fraction > 0 for r in res.rounds if r.picked)
+    lo, hi = res.interval
+    classified = res.labels > 0
+    assert np.all(lo[classified] <= hi[classified])
+    # inside the level set (sin <= 0.2) where classified inside, by the truth on the candidates
+    x = res.candidates[:, 0]
+    truth_inside = np.sin(6 * x) <= 0.2
+    assert np.mean(truth_inside[res.labels == 1]) > 0.95
+    assert np.mean(~truth_inside[res.labels == 2]) > 0.95
+
+
+def test_acquisition_is_validated() -> None:
+    from mvlse import LseConfig
+
+    with pytest.raises(ValueError, match="acquisition"):
+        LseConfig(threshold=0.0, acquisition="ucb")
