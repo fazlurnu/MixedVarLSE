@@ -1,0 +1,10 @@
+problem,condition,F1 at 100,F1 at 250,samples to F1 >= 0.99,false safe [%],ambiguous [%],errors flagged ambiguous [%],minutes per run
+goldstein36_graded,"A: exact, straddle",0.9878 +- 0.0027,0.9926 +- 0.0009,120 +- 28,0.082 +- 0.030,2.2 +- 0.1,78 +- 3,74
+goldstein36_graded,"B: se, straddle",0.9918 +- 0.0017,0.9963 +- 0.0006,82 +- 13,0.002 +- 0.005,1.8 +- 0.1,98 +- 2,104
+goldstein36_graded,"C: se, Gotovos LSE",0.9909 +- 0.0013,0.9952 +- 0.0013,88 +- 12,0.022 +- 0.031,2.3 +- 0.3,94 +- 5,65
+goldstein36_flip,"A: exact, straddle",0.9884 +- 0.0030,0.9923 +- 0.0006,98 +- 14,0.086 +- 0.018,2.2 +- 0.3,77 +- 4,64
+goldstein36_flip,"B: se, straddle",0.9924 +- 0.0015,0.9957 +- 0.0005,80 +- 11,0.012 +- 0.012,1.4 +- 0.2,88 +- 6,99
+goldstein36_flip,"C: se, Gotovos LSE",0.9911 +- 0.0018,0.9933 +- 0.0014,86 +- 21,0.046 +- 0.036,1.9 +- 0.3,79 +- 10,33
+himmelblau36_graded,"A: exact, straddle",0.4635 +- 0.0862,0.6833 +- 0.1308,never,0.106 +- 0.094,15.9 +- 4.4,87 +- 22,66
+himmelblau36_graded,"B: se, straddle",0.4777 +- 0.0906,0.7311 +- 0.0358,never,0.036 +- 0.029,12.8 +- 1.8,92 +- 7,77
+himmelblau36_graded,"C: se, Gotovos LSE",0.1492 +- 0.1445,0.1492 +- 0.1445,never,0.084 +- 0.093,7.7 +- 5.4,34 +- 24,1

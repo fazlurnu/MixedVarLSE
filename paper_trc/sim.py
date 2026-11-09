@@ -16,8 +16,9 @@ def blackbox(n_encounters: int = config.N_ENCOUNTERS, **overrides):
     is good to about +-20%, so the GP takes each one as exact (paper Sec. 4.1).
     ``common.show_p`` recovers the interval from (y, N) when a result is reported.
 
-    A point that carries ``speed`` also gets its class airframe (``config.airframe``), so
-    the 40 and 60 kt classes fly the fixed-wing, and every class CDaRR's turn limits.
+    A point that carries ``speed``, or a run that pins it in ``overrides``, also gets its class
+    airframe (``config.airframe``), so the 40 and 60 kt classes fly the fixed-wing, and every
+    class CDaRR's turn limits.
     """
     mc = make_blackbox(
         n_encounters=n_encounters,
@@ -28,7 +29,9 @@ def blackbox(n_encounters: int = config.N_ENCOUNTERS, **overrides):
     )
 
     def evaluate(points):
-        points = [{**p, "kinematics": config.airframe(p["speed"])} if "speed" in p else p
+        # the speed class sets the airframe, whether the point varies it or the run pins it
+        points = [{**p, "kinematics": config.airframe(p.get("speed", overrides.get("speed")))}
+                  if "speed" in p or "speed" in overrides else p
                   for p in points]
         return [y for y, _se in mc(points)]
 

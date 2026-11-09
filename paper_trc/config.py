@@ -10,6 +10,11 @@ Units: SI throughout (m, m/s, s, deg). Knots appear only to name the speed class
 import os
 from dataclasses import replace
 
+# One BLAS/OpenMP thread per process: the campaign's parallelism is its N_JOBS workers. Set
+# before numpy loads; the workers inherit it. VECLIB is macOS, OPENBLAS/MKL are Linux numpy.
+for _var in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS", "VECLIB_MAXIMUM_THREADS"):
+    os.environ.setdefault(_var, "1")
+
 from blueskycdarr.aircraft import FIXEDWING, MULTIROTOR, AircraftModel
 from mvlse import Continuous, DesignSpace, Ordinal
 
@@ -118,11 +123,12 @@ EXPERIMENTS = {
         "n_init_per_category": 1,   # 36 categories -> 36 initial points
         "bracket_headings": (90.0, 170.0),   # best CNS at a benign crossing, worst near head-on
     },
-    # The requirement surface: four CNS variables, 20 kt only, at the two regime extremes.
+    # The requirement surface: four CNS variables at the two regime extremes, each at the speed
+    # class where exp1 found it hardest -- shallow (2 deg) at 20 kt, head-on (180 deg) at 60 kt.
     "exp2_surface": {
         "space": CNS_VARIABLES,
-        "speed": SPEED_CLASSES["20kt"],
         "headings": (2.0, 180.0),
+        "speed_at": {2.0: SPEED_CLASSES["20kt"], 180.0: SPEED_CLASSES["60kt"]},
         "max_evaluations": 250,
         "n_init_per_category": 2,   # 12 categories -> 24 initial points
     },

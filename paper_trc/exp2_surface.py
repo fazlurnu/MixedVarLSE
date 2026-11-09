@@ -1,4 +1,4 @@
-"""Exp. 2 -- the requirement surface: four CNS variables, 20 kt, at 2 and 180 deg (Sec. 5.8-5.10).
+"""Exp. 2 -- the requirement surface: four CNS variables, 2 deg at 20 kt and 180 deg at 60 kt (Sec. 5.8-5.10).
 
     python exp2_surface.py --dpsi 180 --bracket   # corner check at one heading
     python exp2_surface.py --dpsi 180             # one campaign; resumes from its store
@@ -15,7 +15,7 @@ P = config.EXPERIMENTS["exp2_surface"]
 
 
 def make_bodies(dpsi: float):
-    evaluate = sim.blackbox(speed=P["speed"], dpsi=dpsi)
+    evaluate = sim.blackbox(speed=P["speed_at"][dpsi], dpsi=dpsi)
 
     def bracket_body(path):
         rows = sim.bracket(evaluate, [config.CNS_BEST, config.CNS_WORST])
@@ -47,7 +47,7 @@ if __name__ == "__main__":
     args = ap.parse_args()
 
     bracket_body, campaign_body = make_bodies(args.dpsi)
-    params = {**P, "dpsi": args.dpsi}
+    params = {**P, "dpsi": args.dpsi, "speed": P["speed_at"][args.dpsi]}
     tag = f"dpsi{args.dpsi:.0f}_" + ("bracket" if args.bracket else "campaign")
     common.run_logged("exp2_surface", tag, params, args.allow_dirty,
                       bracket_body if args.bracket else campaign_body)

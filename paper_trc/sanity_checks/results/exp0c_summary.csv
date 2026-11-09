@@ -1,0 +1,7 @@
+case,condition,F1 at 100,F1 at 250,samples to F1 >= 0.99,false safe at 250,false unsafe at 250,minutes per run
+goldstein36_graded / edge,"A: straddle, max afterwards",0.9957 +- 0.0010,0.9992 +- 0.0004,98 +- 8,0.03%,0.03%,109.5
+goldstein36_graded / edge,B: worst-case straddle,0.9991 +- 0.0003,0.9926 +- 0.0130,75 +- 0,0.20%,0.37%,76.7
+goldstein36_flip / edge,"A: straddle, max afterwards",0.9978 +- 0.0009,0.9992 +- 0.0007,72 +- 8,0.05%,0.02%,116.3
+goldstein36_flip / edge,B: worst-case straddle,0.9996 +- 0.0002,0.9978 +- 0.0010,68 +- 11,0.10%,0.10%,72.3
+goldstein36_graded / moving,"A: straddle, max afterwards",0.8924 +- 0.1744,0.9712 +- 0.0036,never,2.00%,0.34%,126.1
+goldstein36_graded / moving,B: worst-case straddle,0.9684 +- 0.0059,0.9865 +- 0.0010,never,1.00%,0.09%,133.4

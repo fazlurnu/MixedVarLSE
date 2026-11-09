@@ -66,9 +66,16 @@ class LseConfig:
     # intersected with its previous ones, a candidate whose interval clears tau (by epsilon) is
     # classified for good and leaves the pool, and the ambiguity min(hi - tau, tau - lo) of the
     # intersected interval picks the next sample. For one interval the two scores coincide.
+    # "worst_case": the level set of the worst case over one continuous ``environment``
+    # variable, g(x) = max_e f(x, e) (min_e when greater_is_inside), instead of f itself. Each
+    # design x is scored by the straddle of g, from the bounds max_e (mu -+ kappa*s) on a grid
+    # of n_environment values of e, and sampled at the e most likely to be its worst one
+    # (highest mu + kappa*s), as in StableOpt's parameter-robust variant (Bogunovic et al. 2018).
     acquisition: str = "straddle"
     beta_sqrt: float = 3.0              # gotovos only; their experiments used beta^(1/2) = 3
     epsilon: float = 0.0                # gotovos only: accuracy tolerance
+    environment: str | None = None      # worst_case only: the continuous variable to take it over
+    n_environment: int = 21             # worst_case only: grid over the environment variable
 
     # candidate and monitor sets (None -> chosen from q)
     n_candidates_per_axis: int = 15
@@ -97,8 +104,17 @@ class LseConfig:
             raise ValueError(f"batch_size must be >= 1, got {self.batch_size}")
         if self.max_evaluations < 2:
             raise ValueError(f"max_evaluations must be >= 2, got {self.max_evaluations}")
-        if self.acquisition not in ("straddle", "gotovos"):
-            raise ValueError(f"acquisition must be 'straddle' or 'gotovos', got {self.acquisition!r}")
+        if self.acquisition not in ("straddle", "gotovos", "worst_case"):
+            raise ValueError(
+                f"acquisition must be 'straddle', 'gotovos' or 'worst_case', got {self.acquisition!r}"
+            )
+        if self.acquisition == "worst_case":
+            if self.environment is None:
+                raise ValueError("acquisition='worst_case' needs environment=<continuous variable>")
+            if self.batch_size != 1:
+                raise ValueError("acquisition='worst_case' samples one point per round (batch_size=1)")
+            if self.n_environment < 2:
+                raise ValueError(f"n_environment must be >= 2, got {self.n_environment}")
 
 
 @dataclass
@@ -143,6 +159,9 @@ class LseResult:
     candidates: np.ndarray | None = field(default=None, repr=False)
     interval: tuple[np.ndarray, np.ndarray] | None = field(default=None, repr=False)
     labels: np.ndarray | None = field(default=None, repr=False)
+    # worst_case: the designs (encoded, environment column dropped) and the environment grid
+    designs: np.ndarray | None = field(default=None, repr=False)
+    environment_grid: np.ndarray | None = field(default=None, repr=False)
 
     # ------------------------------------------------------------------ access
     @property
@@ -334,6 +353,21 @@ def run_lse(
         c_hi = np.full(len(candidates), np.inf)
         labels = np.zeros(len(candidates), dtype=int)
         result.candidates, result.interval, result.labels = candidates, (c_lo, c_hi), labels
+    worst_case = config.acquisition == "worst_case"
+    if worst_case:
+        if config.environment not in space.continuous_names:
+            raise ValueError(
+                f"environment {config.environment!r} is not a continuous variable of the space "
+                f"{space.continuous_names}"
+            )
+        env_col = space.continuous_names.index(config.environment)
+        designs = np.unique(np.delete(candidates, env_col, axis=1), axis=0)
+        e_grid = np.linspace(0.0, 1.0, config.n_environment)
+        n_d, n_e = len(designs), len(e_grid)
+        # every design at every grid value of e, design-major: row d * n_e + j
+        expanded = np.insert(np.repeat(designs, n_e, axis=0), env_col, np.tile(e_grid, n_d), axis=1)
+        sampled: set[tuple[int, int]] = set()
+        result.designs, result.environment_grid = designs, e_grid
 
     # ------------------------------------------------------------------- rounds
     for index in range(config.max_evaluations):
@@ -355,8 +389,18 @@ def run_lse(
         previous_class = classification
         ambiguous = float(np.mean(straddle(mu_m, sd_m, config.threshold, config.kappa) > 0))
 
-        mu_c, sd_c = model.predict(candidates)
-        if gotovos:
+        mu_c, sd_c = (None, None) if worst_case else model.predict(candidates)
+        if worst_case:
+            mu_x, sd_x = model.predict(expanded)
+            sign = -1.0 if config.greater_is_inside else 1.0     # worst = max of sign * f
+            hi_e = (sign * mu_x + config.kappa * sd_x).reshape(n_d, n_e)
+            lo_e = (sign * mu_x - config.kappa * sd_x).reshape(n_d, n_e)
+            g_hi, g_lo, tau_s = hi_e.max(axis=1), lo_e.max(axis=1), sign * config.threshold
+            scores = np.minimum(g_hi - tau_s, tau_s - g_lo)
+            for d, j in sampled:            # a design whose likeliest worst e is spent
+                hi_e[d, j] = -np.inf        # moves on to its next one
+            scores[~np.isfinite(hi_e.max(axis=1))] = -np.inf
+        elif gotovos:
             tau, eps = config.threshold, config.epsilon
             open_ = labels == 0
             q_lo, q_hi = mu_c - config.beta_sqrt * sd_c, mu_c + config.beta_sqrt * sd_c
@@ -400,7 +444,20 @@ def run_lse(
             result.stop_reason = f"budget ({config.max_evaluations} evaluations)"
 
         # ------------------------------------------------------------ acquisition
-        if not result.stop_reason:
+        if not result.stop_reason and worst_case:
+            d = int(np.argmax(scores))
+            j = int(np.argmax(hi_e[d]))
+            if not np.isfinite(scores[d]):
+                result.stop_reason = "candidate set exhausted"
+            else:
+                sampled.add((d, j))
+                record.picked = [d * n_e + j]
+                batch = expanded[[d * n_e + j]]
+                y_new, se_new = measure(batch)
+                result.w = np.vstack([result.w, batch])
+                result.y = np.append(result.y, y_new)
+                result.se = np.append(result.se, se_new)
+        elif not result.stop_reason:
             k = min(config.batch_size, config.max_evaluations - len(result.y))
             # spent candidates already score -inf, so select_batch never returns them
             chosen = select_batch(
