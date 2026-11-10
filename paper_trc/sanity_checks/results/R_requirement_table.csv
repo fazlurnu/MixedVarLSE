@@ -1,0 +1,13 @@
+velocity [m/s],position [m],shallow: min reception (any range > 1 km),head-on: min range at reception 1 [km],head-on: min reception at 15 km
+1.0,3.0,0.12,1.0,0.10
+1.0,10.0,0.10,1.0,0.10
+1.0,30.0,0.10,1.0,0.10
+1.0,92.6,0.10,1.0,0.10
+3.0,3.0,0.62,0.8,0.16
+3.0,10.0,0.61,0.8,0.16
+3.0,30.0,0.56,0.8,0.13
+3.0,92.6,none,1.0,0.12
+10.0,3.0,none,none,none
+10.0,10.0,none,none,none
+10.0,30.0,none,none,none
+10.0,92.6,none,none,none
