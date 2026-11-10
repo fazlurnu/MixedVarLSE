@@ -13,7 +13,9 @@ PLANNED = {
     "exp0_verify": ["active"],
     "exp1_heading": ["bracket", "campaign"],
     "exp2_surface": [f"dpsi{d:.0f}_{k}" for d in config.EXPERIMENTS["exp2_surface"]["headings"]
-                     for k in ("bracket", "campaign")],
+                     for k in ("bracket", "campaign")]
+                    + [f"dpsi{d:.0f}_{s}_{k}" for d, s in config.EXPERIMENTS["exp2_surface"]["extra_runs"]
+                       for k in ("bracket", "campaign")],
     "exp3_margin": ["dpsi180_margin1.05"],
     "exp4_confirm": ["boundary"],
 }

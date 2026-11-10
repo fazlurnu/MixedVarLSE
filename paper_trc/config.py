@@ -129,6 +129,9 @@ EXPERIMENTS = {
         "space": CNS_VARIABLES,
         "headings": (2.0, 180.0),
         "speed_at": {2.0: SPEED_CLASSES["20kt"], 180.0: SPEED_CLASSES["60kt"]},
+        # Is 20 kt really the hardest shallow case? exp1 said so, but its shallow end is the part
+        # it fitted worst (sanity_checks/16, 18): the other two classes at 2 deg as well.
+        "extra_runs": [(2.0, "40kt"), (2.0, "60kt")],
         "max_evaluations": 250,
         "n_init_per_category": 2,   # 12 categories -> 24 initial points
     },
