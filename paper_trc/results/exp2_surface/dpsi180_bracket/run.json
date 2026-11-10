@@ -1,0 +1,117 @@
+{
+  "experiment": "exp2_surface",
+  "tag": "dpsi180_bracket",
+  "status": "done",
+  "started": "2026-11-09T08:58:59",
+  "finished": "2026-11-09T09:00:48",
+  "argv": [
+    "exp2_surface.py",
+    "--dpsi",
+    "180",
+    "--bracket"
+  ],
+  "code": {
+    "mvlse": {
+      "commit": "f5dbe1fa869cc9627a3e231c4d0271d63875c0f5",
+      "dirty": false
+    },
+    "blueskycdarr": {
+      "commit": "030c0f459a3c5491cef88485e2672aef60a14179",
+      "dirty": false
+    }
+  },
+  "params": {
+    "space": {
+      "p_reception": {
+        "type": "Continuous",
+        "lower": 0.1,
+        "upper": 1.0
+      },
+      "max_range_m": {
+        "type": "Continuous",
+        "lower": 300.0,
+        "upper": 15000.0
+      },
+      "pos_ci95": {
+        "type": "Ordinal",
+        "levels": [
+          3.0,
+          10.0,
+          30.0,
+          92.6
+        ]
+      },
+      "vel_ci95": {
+        "type": "Ordinal",
+        "levels": [
+          1.0,
+          3.0,
+          10.0
+        ]
+      }
+    },
+    "headings": [
+      2.0,
+      180.0
+    ],
+    "speed_at": {
+      "2.0": 10.28888,
+      "180.0": 30.86664
+    },
+    "max_evaluations": 250,
+    "n_init_per_category": 2,
+    "dpsi": 180.0,
+    "speed": 30.86664
+  },
+  "shared": {
+    "FIXED": {
+      "rpz": 150.0,
+      "dcpa": 0.0,
+      "aim": "flown",
+      "tlos": 400.0,
+      "t_lookahead": 300.0,
+      "t_max": 900.0,
+      "resolution_margin": 1.05
+    },
+    "N_ENCOUNTERS": 100000,
+    "N_JOBS": 100,
+    "TAU": -3.0,
+    "SEED": 7,
+    "LSE": {
+      "method": "hs_dim",
+      "correlation": "squar_exp",
+      "batch_size": 1,
+      "seed": 7,
+      "flip_tolerance": -1.0,
+      "stop_when_confident": false,
+      "keep_snapshots": false,
+      "verbose": true
+    },
+    "RESOLVER": "MVP",
+    "RECOVERY": "ProbabilisticFTR"
+  },
+  "outcome": {
+    "corners": [
+      {
+        "point": {
+          "p_reception": 1.0,
+          "max_range_m": 15000.0,
+          "pos_ci95": 3.0,
+          "vel_ci95": 1.0
+        },
+        "y": -5.301034338587086,
+        "acceptable": true
+      },
+      {
+        "point": {
+          "p_reception": 0.1,
+          "max_range_m": 300.0,
+          "pos_ci95": 92.6,
+          "vel_ci95": 10.0
+        },
+        "y": -2.1714561235880053e-06,
+        "acceptable": false
+      }
+    ]
+  }
+}

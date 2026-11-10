@@ -1,0 +1,4 @@
+problem,rule fires,at sample,"F1 when it fires (mean, min)",misclassified when it fires,confidently safe but truly unsafe,F1 >= 0.99 first at,F1 at 250
+goldstein36_graded,3/10,234,"0.9912, 0.9875",0.97%,0.494%,110,0.9936
+goldstein36_flip,6/10,206,"0.9932, 0.9877",0.75%,0.326%,87,0.9942
+himmelblau36_graded,1/10,36,"0.0000, 0.0000",5.54%,0.000%,never,0.7192
