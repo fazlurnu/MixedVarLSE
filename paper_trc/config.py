@@ -119,7 +119,7 @@ EXPERIMENTS = {
             "dpsi": Continuous(*HEADING_RANGE),
             "speed": Ordinal(list(SPEED_CLASSES.values())),
         },
-        "max_evaluations": 250,
+        "max_evaluations": 750,
         "n_init_per_category": 1,   # 36 categories -> 36 initial points
         "bracket_headings": (90.0, 170.0),   # best CNS at a benign crossing, worst near head-on
     },
