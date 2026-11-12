@@ -135,14 +135,22 @@ EXPERIMENTS = {
         "max_evaluations": 250,
         "n_init_per_category": 2,   # 12 categories -> 24 initial points
     },
-    # Mechanism check: exp2 at head-on with the MVP aim point raised to 1.05 RPZ.
-    "exp3_margin": {
-        "space": CNS_VARIABLES,
-        "speed": SPEED_CLASSES["20kt"],
-        "heading": 180.0,
-        "resolution_margin": 1.05,
-        "max_evaluations": 250,
-        "n_init_per_category": 2,
+    # exp1 aimed at the requirement: the level set of the WORST heading, g(x) = max_dpsi f(x, dpsi),
+    # with dpsi an environment variable (Inatsu et al. 2021; StableOpt's rule, Bogunovic et al. 2018).
+    # Each round: the design (CNS x speed class) with the largest straddle of g, simulated at the
+    # heading where mu + kappa*s is highest. Heading grid: 21 values, linear, 2 and 180 deg included.
+    # Speed stays a design variable: one requirement per speed class.
+    "exp3_worst_heading": {
+        "space": {
+            **CNS_VARIABLES,
+            "dpsi": Continuous(*HEADING_RANGE),
+            "speed": Ordinal(list(SPEED_CLASSES.values())),
+        },
+        "acquisition": "worst_case",
+        "environment": "dpsi",
+        "n_environment": 21,
+        "max_evaluations": 250,     # = exp1's original budget
+        "n_init_per_category": 1,   # 36 categories -> 36 initial points, as exp1
     },
     # Stage 2 confirmation: direct Monte Carlo on the fitted exp2 boundary.
     "exp4_confirm": {

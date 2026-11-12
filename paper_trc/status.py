@@ -16,7 +16,7 @@ PLANNED = {
                      for k in ("bracket", "campaign")]
                     + [f"dpsi{d:.0f}_{s}_{k}" for d, s in config.EXPERIMENTS["exp2_surface"]["extra_runs"]
                        for k in ("bracket", "campaign")],
-    "exp3_margin": ["dpsi180_margin1.05"],
+    "exp3_worst_heading": ["campaign"],
     "exp4_confirm": ["boundary"],
 }
 
