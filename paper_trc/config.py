@@ -149,7 +149,7 @@ EXPERIMENTS = {
         "acquisition": "worst_case",
         "environment": "dpsi",
         "n_environment": 21,
-        "max_evaluations": 250,     # = exp1's original budget
+        "max_evaluations": 500,     # continued from 250 (resumes from its store)
         "n_init_per_category": 1,   # 36 categories -> 36 initial points, as exp1
     },
     # Stage 2 confirmation: direct Monte Carlo on the fitted exp2 boundary.
