@@ -123,6 +123,17 @@ EXPERIMENTS = {
         "n_init_per_category": 1,   # 36 categories -> 36 initial points
         "bracket_headings": (90.0, 170.0),   # best CNS at a benign crossing, worst near head-on
     },
+    # Exp. 1 with the heading on a log scale: the same space, budget and seed, but 2 -> 4 deg is as
+    # far as 90 -> 180 deg for the kernel and the samplers (the shallow-end rise lies below ~10 deg).
+    "exp1_log_heading": {
+        "space": {
+            **CNS_VARIABLES,
+            "dpsi": Continuous(*HEADING_RANGE, log=True),
+            "speed": Ordinal(list(SPEED_CLASSES.values())),
+        },
+        "max_evaluations": 250,
+        "n_init_per_category": 1,   # 36 categories -> 36 initial points, as exp1
+    },
     # The requirement surface: four CNS variables at the two regime extremes, each at the speed
     # class where exp1 found it hardest -- shallow (2 deg) at 20 kt, head-on (180 deg) at 60 kt.
     "exp2_surface": {

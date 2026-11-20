@@ -88,24 +88,37 @@ class Variable:
 
 @dataclass(frozen=True)
 class Continuous(Variable):
-    """A real-valued input on ``[lower, upper]``."""
+    """A real-valued input on ``[lower, upper]``.
+
+    ``log=True`` maps the variable to ``[0, 1]`` on a log scale, so equal ratios are equal
+    distances for the kernel and the samplers (e.g. 2 -> 4 deg as far as 90 -> 180 deg).
+    """
 
     lower: float
     upper: float
+    log: bool = False
 
     def __post_init__(self) -> None:
         if not self.upper > self.lower:
             raise ValueError(f"Continuous bounds must satisfy upper > lower, got {self}")
+        if self.log and not self.lower > 0:
+            raise ValueError(f"A log-scaled variable needs lower > 0, got {self}")
 
     @property
     def span(self) -> float:
         return float(self.upper - self.lower)
 
     def to_unit(self, value: np.ndarray) -> np.ndarray:
-        return (np.asarray(value, dtype=float) - self.lower) / self.span
+        v = np.asarray(value, dtype=float)
+        if self.log:
+            return np.log(v / self.lower) / np.log(self.upper / self.lower)
+        return (v - self.lower) / self.span
 
     def from_unit(self, unit: np.ndarray) -> np.ndarray:
-        return self.lower + self.span * np.asarray(unit, dtype=float)
+        u = np.asarray(unit, dtype=float)
+        if self.log:
+            return self.lower * (self.upper / self.lower) ** u
+        return self.lower + self.span * u
 
 
 @dataclass(frozen=True)
@@ -330,8 +343,8 @@ class DesignSpace:
             f"  {'-' * 6} {'-' * 16} {'-' * 10} {'-' * 28} {'-' * 28}",
         ]
         for j, (name, var) in enumerate(self._continuous.items()):
-            phys = f"[{var.lower:g}, {var.upper:g}]"
-            seen = "[0, 1]" if self.normalize else phys
+            phys = f"[{var.lower:g}, {var.upper:g}]" + (" log" if var.log else "")
+            seen = ("[0, 1] (log)" if var.log else "[0, 1]") if self.normalize else phys
             lines.append(f"  {j:<6} {name:<16} {'continuous':<10} {phys:<28} {seen}")
         for j, (name, var) in enumerate(self._discrete.items(), start=self.q):
             nature = "ordinal" if isinstance(var, Ordinal) else "nominal"
