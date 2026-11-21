@@ -134,6 +134,17 @@ EXPERIMENTS = {
         "max_evaluations": 500,     # continued from 250 (resumes from its store)
         "n_init_per_category": 1,   # 36 categories -> 36 initial points, as exp1
     },
+    # As exp1_log_heading, but 4 initial points per category (144) instead of 1: a denser start for the
+    # category correlations, at the cost of 108 adaptive samples. Same budget (500) and seed.
+    "exp1_log_heading_init4": {
+        "space": {
+            **CNS_VARIABLES,
+            "dpsi": Continuous(*HEADING_RANGE, log=True),
+            "speed": Ordinal(list(SPEED_CLASSES.values())),
+        },
+        "max_evaluations": 500,
+        "n_init_per_category": 4,   # 36 categories -> 144 initial points
+    },
     # The requirement surface: four CNS variables at the two regime extremes, each at the speed
     # class where exp1 found it hardest -- shallow (2 deg) at 20 kt, head-on (180 deg) at 60 kt.
     "exp2_surface": {
