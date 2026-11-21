@@ -145,6 +145,20 @@ EXPERIMENTS = {
         "max_evaluations": 500,
         "n_init_per_category": 4,   # 36 categories -> 144 initial points
     },
+    # Exp. 1 (linear heading, same kernel, budget 500, seed) with a 16x denser candidate pool. The
+    # default pool is one Sobol cloud of 256 (reception, range, heading) points shared by every
+    # category; it holds 1 point below 5 deg at reception 0.5-0.9 and 2 in the head-on corner
+    # (>= 150 deg, <= 3 km, reception >= 0.8). 4096 per category holds 32 and 27 (notebook 64).
+    "exp1_heading_pool4096": {
+        "space": {
+            **CNS_VARIABLES,
+            "dpsi": Continuous(*HEADING_RANGE),
+            "speed": Ordinal(list(SPEED_CLASSES.values())),
+        },
+        "max_evaluations": 500,
+        "n_init_per_category": 1,   # 36 categories -> 36 initial points, as exp1
+        "n_candidates_per_category": 4096,
+    },
     # The requirement surface: four CNS variables at the two regime extremes, each at the speed
     # class where exp1 found it hardest -- shallow (2 deg) at 20 kt, head-on (180 deg) at 60 kt.
     "exp2_surface": {
