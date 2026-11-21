@@ -131,7 +131,7 @@ EXPERIMENTS = {
             "dpsi": Continuous(*HEADING_RANGE, log=True),
             "speed": Ordinal(list(SPEED_CLASSES.values())),
         },
-        "max_evaluations": 250,
+        "max_evaluations": 500,     # continued from 250 (resumes from its store)
         "n_init_per_category": 1,   # 36 categories -> 36 initial points, as exp1
     },
     # The requirement surface: four CNS variables at the two regime extremes, each at the speed
