@@ -172,6 +172,22 @@ EXPERIMENTS = {
         "n_init_per_category": 1,   # 36 categories -> 36 initial points, as exp1_log_heading
         "n_candidates_per_category": 4096,
     },
+    # As exp1_log_heading_pool4096, but the surveillance range also on a log scale and the Monte Carlo
+    # standard error passed to the GP as noise. On a linear range the cliff in P(LoS) below ~1 km sits in
+    # the first 5 % of the axis and collapses the range correlation length; zero-loss samples taken as
+    # exact bend the boundary at short range (sanity checks 71, 72). Same pool, budget (500) and seed.
+    "exp1_log_range_pool4096": {
+        "space": {
+            **CNS_VARIABLES,
+            "max_range_m": Continuous(300.0, 15000.0, log=True),
+            "dpsi": Continuous(*HEADING_RANGE, log=True),
+            "speed": Ordinal(list(SPEED_CLASSES.values())),
+        },
+        "max_evaluations": 500,
+        "n_init_per_category": 1,   # 36 categories -> 36 initial points (new: the log range moves them)
+        "n_candidates_per_category": 4096,
+        "with_se": True,            # sim.blackbox(with_se=True): the MC standard error as GP noise
+    },
     # The requirement surface: four CNS variables at the two regime extremes, each at the speed
     # class where exp1 found it hardest -- shallow (2 deg) at 20 kt, head-on (180 deg) at 60 kt.
     "exp2_surface": {
