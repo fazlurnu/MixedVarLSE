@@ -159,6 +159,19 @@ EXPERIMENTS = {
         "n_init_per_category": 1,   # 36 categories -> 36 initial points, as exp1
         "n_candidates_per_category": 4096,
     },
+    # exp1_log_heading with the 4096-per-category pool: the log scale resolves the shallow-end rise
+    # (notebook 62), the dense pool reaches the head-on corner, which the 256 pool left empty on
+    # the log scale (0 candidates; 4096 holds 6, notebook 64). Same space, budget (500) and seed.
+    "exp1_log_heading_pool4096": {
+        "space": {
+            **CNS_VARIABLES,
+            "dpsi": Continuous(*HEADING_RANGE, log=True),
+            "speed": Ordinal(list(SPEED_CLASSES.values())),
+        },
+        "max_evaluations": 500,
+        "n_init_per_category": 1,   # 36 categories -> 36 initial points, as exp1_log_heading
+        "n_candidates_per_category": 4096,
+    },
     # The requirement surface: four CNS variables at the two regime extremes, each at the speed
     # class where exp1 found it hardest -- shallow (2 deg) at 20 kt, head-on (180 deg) at 60 kt.
     "exp2_surface": {
